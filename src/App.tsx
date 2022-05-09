@@ -1,24 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { ReactNode } from 'react';
 import './App.css';
+import RouteConfig from './route/route';
+import './app.scss'
 
-function App() {
+const App = (): React.ReactElement<ReactNode> => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='header'>
+        头部
+      </div>
+      <div className='content-box'>
+        <div className='menu'>
+          菜单
+        </div>
+        <div className='view-box'>
+          <RouteConfig />
+        </div>
+      </div>
     </div>
   );
 }
