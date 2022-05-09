@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import './index.scss'
 
 const MyAccount = (): React.ReactElement<ReactNode> => {
     return (
