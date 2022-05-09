@@ -1,0 +1,82 @@
+.menu-header {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 0 0 20px 20px;
+  align-items: center;
+  padding: 0 24px;
+  .menu-logo {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-right: 64px;
+    .avatar-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+    .version-box {
+      text-align: left;
+      padding-left: 8px;
+      p {
+        font-size: 14px;
+      }
+      p:first-child {
+        padding-bottom: 2px;
+      }
+    }
+  }
+  .menu-list {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .route-name {
+      font-size: 16px;
+      color: $title-color;
+      margin-right: 24px;
+    }
+    ul {
+      display: flex;
+      li {
+        margin-right: 16px;
+        cursor: pointer;
+        position: relative;
+        .active-line {
+          position: absolute;
+          width: 0;
+          transition: 0.3s all;
+          display: inline-block;
+          height: 3px;
+          background-color: $title-color;
+          bottom: -10px;
+          left: 50%;
+          margin-left: -25%;
+          border-radius: 4px;
+        }
+      }
+      .active-tab {
+        .active-line {
+          width: 50%;
+        }
+      }
+    }
+  }
+  .rubik-help {
+    .iconfont {
+      font-size: 30px;
+      cursor: pointer;
+      color: $title-color;
+    }
+  }
+}
