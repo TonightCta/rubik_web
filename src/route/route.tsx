@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import IndexView from '../views/index/index';
 import * as View from '../views/view';
 
 const RouteConfig = (): React.ReactElement<ReactNode> => {
