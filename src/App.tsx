@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import './App.css';
 import RouteConfig from './route/route';
 import './app.scss'
+import LeftMenu from './components/LeftMenu/index';
 
 const App = (): React.ReactElement<ReactNode> => {
   return (
@@ -10,9 +11,7 @@ const App = (): React.ReactElement<ReactNode> => {
         头部
       </div>
       <div className='content-box'>
-        <div className='menu'>
-          菜单
-        </div>
+        <LeftMenu/>
         <div className='view-box'>
           <RouteConfig />
         </div>
