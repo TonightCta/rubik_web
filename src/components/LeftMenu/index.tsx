@@ -2,7 +2,7 @@ import React from "react";
 import './index.scss'
 const LeftMenu = ()=>{
     return(
-        <div className="LeftMenu">侧边栏</div>
+        <div className="LeftMenu">左侧菜单</div>
     )
 }
 export default LeftMenu
