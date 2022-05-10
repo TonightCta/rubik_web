@@ -47,7 +47,7 @@ table {
 	border-spacing: 0;
 }
 body{
-    background-color: #efe6f5;
+    background-color: #efe6f5!important;
 }
 div{
 	box-sizing: border-box;

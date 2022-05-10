@@ -4,11 +4,13 @@ import './assets/css/reset.css'
 import RouteConfig from './route/route';
 import MenuHeader from './components/menu_header';
 import './app.scss'
-import LeftMenu from './components/LeftMenu/index';
+import LeftMenu from './components/left_menu/index';
+import { HashRouter } from 'react-router-dom'
 
 const App = (): React.ReactElement<ReactNode> => {
   return (
-    <div className="App">
+    <HashRouter>
+      <div className="App">
       {/* 头部导航 */}
       <MenuHeader/>
       <div className='content-box'>
@@ -18,6 +20,8 @@ const App = (): React.ReactElement<ReactNode> => {
         </div>
       </div>
     </div>
+    </HashRouter>
+    
   );
 }
 

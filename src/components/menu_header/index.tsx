@@ -7,8 +7,11 @@ import { ActionType } from "../../typing/state";
 import reducer from "../../reducer/index";
 
 const MenuHeader = (): React.ReactElement<ReactNode> => {
-    const [state, dispatch] = useReducer(reducer.activeIndex.activeReducer, Number(sessionStorage.getItem('header_activeIndex')) || 0, reducer.activeIndex.initActive);
-    useEffect(() => {
+    const [state, dispatch] = useReducer(
+        reducer.activeIndex.activeReducer,
+        Number(sessionStorage.getItem('header_activeIndex')) || 0,
+        reducer.activeIndex.initActive);
+    useEffect(() : void => {
         // 进入页面获取activeIndex值
         const storageActiveIndex = sessionStorage.getItem('header_activeIndex')
         if (typeof (storageActiveIndex) == 'number') {
@@ -18,7 +21,7 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
             })
         }
     }, [])
-    useEffect(() => {
+    useEffect(() : void => {
         // 当activeIndex的发生改变时同步改变session        
         sessionStorage.setItem('header_activeIndex', JSON.stringify(state.activeIndex))
     }, [state.activeIndex])
