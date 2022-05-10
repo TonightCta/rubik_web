@@ -1,0 +1,42 @@
+.my-account {
+  padding: 40px;
+  .account-tools {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .account-remark-box {
+    padding: 24px;
+    background-color: $test-bg;
+    border-radius: 16px;
+    margin-top: 24px;
+    p {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+  }
+  .account-table {
+    padding: 24px;
+    margin-top: 24px;
+    background-color: $test-bg;
+    border-radius: 16px;
+    .search-for-accounts{
+      width: 100%;
+      display: flex;
+      height: 52px;
+      background-color: white;
+      margin-bottom: 12px;
+      border-radius: 20px;
+      align-items: center;
+      padding: 0 24px;
+      .iconfont{
+        font-size: 20px;
+        color:#666;
+      }
+      input{
+        flex: 1;
+        margin-left: 8px;
+      }
+    }
+  }
+}

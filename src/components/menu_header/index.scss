@@ -29,6 +29,7 @@
       padding-left: 8px;
       p {
         font-size: 14px;
+        margin-bottom: 0;
       }
       p:first-child {
         padding-bottom: 2px;
@@ -45,13 +46,16 @@
       font-size: 16px;
       color: $title-color;
       margin-right: 24px;
+      margin-bottom: 0;
     }
     ul {
       display: flex;
+      margin-bottom: 0;
       li {
         margin-right: 16px;
         cursor: pointer;
         position: relative;
+        
         .active-line {
           position: absolute;
           width: 0;

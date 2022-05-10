@@ -24,11 +24,13 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
     );
 
     useEffect((): void => {
-        sessionStorage.setItem('left_active_index', JSON.stringify(state.leftActiveIndex))
+        console.log(state.leftActiveIndex)
+        sessionStorage.setItem('left_active_index', String(state.leftActiveIndex));
         // console.log(state.leftActiveIndex)
     }, [state.leftActiveIndex])
 
     const changeLeftActiveIndex = useCallback((leftActive: string): void => {
+        console.log(leftActive)
         dispatch({
             type: ActionType.CHANGE_LEFT_ACTIVE,
             payload: { leftActiveIndex: leftActive }
@@ -83,7 +85,7 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
         return (
             <div className="popover-list">
                 {
-                    uplevel.props.map((el: any, index: number) => {
+                    uplevel.props.map((el: any, index: number) : ReactNode => {
                         return (
                             <Link key={index} to={el.lowerUrl}  onClick={(): void => {
                                 changeLeftActiveIndex(el.levelOne)
