@@ -1,17 +1,19 @@
-import React, { ReactNode, useCallback, useEffect, useReducer } from "react";
+import React, { ReactNode, useCallback, useEffect, useMemo, useReducer } from "react";
 import './index.scss';
 import TestImg from '../../assets/images/test.png'
 import IconFont from "../icon_font";
 // import AccountView from '../../views/account/index';
 import { ActionType } from "../../typing/state";
 import reducer from "../../reducer/index";
+import { useLocation } from "react-router-dom";
 
 const MenuHeader = (): React.ReactElement<ReactNode> => {
     const [state, dispatch] = useReducer(
         reducer.activeIndex.activeReducer,
         Number(sessionStorage.getItem('header_activeIndex')) || 0,
         reducer.activeIndex.initActive);
-    useEffect(() : void => {
+    const location = useLocation();
+    useEffect((): void => {
         // 进入页面获取activeIndex值
         const storageActiveIndex = sessionStorage.getItem('header_activeIndex')
         if (typeof (storageActiveIndex) == 'number') {
@@ -20,8 +22,12 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
                 payload: { activeIndex: JSON.parse(storageActiveIndex) }
             })
         }
-    }, [])
-    useEffect(() : void => {
+    }, []);
+    useMemo(() => {
+        debugger;
+        console.log(location)
+    }, []);
+    useEffect((): void => {
         // 当activeIndex的发生改变时同步改变session        
         sessionStorage.setItem('header_activeIndex', JSON.stringify(state.activeIndex))
     }, [state.activeIndex])
