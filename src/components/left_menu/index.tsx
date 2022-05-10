@@ -1,11 +1,14 @@
-import React, { ReactElement, ReactNode, } from "react";
+import React, { ReactElement, ReactNode, useCallback, useEffect, useReducer, } from "react";
 import { Link } from "react-router-dom";
 import { Popover } from 'antd';
+import { ActionType } from "../../typing/state";
+import reducer from "../../reducer/index";
 import './index.scss'
 
 interface LowerMenu {
     lowerName: string,
-    lowerUrl: string
+    lowerUrl: string,
+    levelOne?:string
 }
 interface Menu {
     routeName: string,
@@ -13,6 +16,26 @@ interface Menu {
     routeUrl: LowerMenu[]
 }
 const LeftMenu = (): React.ReactElement<ReactNode> => {
+    const [state, dispatch] = useReducer(
+        reducer.LeftActiveIndex.activeLeftReducer,
+        sessionStorage.getItem('left_active_index') || 'Accounts',
+        reducer.LeftActiveIndex.initLeftActive
+    );
+
+    useEffect((): void => {
+        sessionStorage.setItem('left_active_index', JSON.stringify(state.leftActiveIndex))
+        // console.log(state.leftActiveIndex)
+    }, [state.leftActiveIndex])
+
+    const changeLeftActiveIndex = useCallback((leftActive: string): void => {
+        dispatch({
+            type: ActionType.CHANGE_LEFT_ACTIVE,
+            payload: { leftActiveIndex: leftActive }
+        })
+    }, []);
+    // useEffect((): void => {
+    //     console.log(state)
+    // }, [])
     const menuList: Menu[] = [
         {
             routeName: 'Accounts',
@@ -20,7 +43,8 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
             routeUrl: [
                 {
                     lowerName: 'My Account',
-                    lowerUrl: '/'
+                    lowerUrl: '/',
+                    levelOne:'Accounts'
                 },
             ]
         },
@@ -30,11 +54,13 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
             routeUrl: [
                 {
                     lowerName: 'Chain Info',
-                    lowerUrl: '/'
+                    lowerUrl: '/',
+                    levelOne:'NetWork'
                 },
                 {
                     lowerName: 'Block Details',
-                    lowerUrl: '/'
+                    lowerUrl: '/',
+                    levelOne:'NetWork'
                 },
             ]
         },
@@ -44,7 +70,8 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
             routeUrl: [
                 {
                     lowerName: 'Gneral',
-                    lowerUrl: '/setting'
+                    lowerUrl: '/setting',
+                    levelOne:'Setting'
                 },
             ]
         },
@@ -55,7 +82,9 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
                 {
                     uplevel.props.map((el: any, index: number) => {
                         return (
-                            <Link key={index} to={el.lowerUrl}>
+                            <Link key={index} to={el.lowerUrl}  onClick={(): void => {
+                                changeLeftActiveIndex(el.levelOne)
+                            }}>
                                 <p>{el.lowerName}</p>
                             </Link>
                         )
@@ -70,7 +99,7 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
                 {
                     menuList.map((el: any, index: number): ReactElement => {
                         return (
-                            <li key={index}>
+                            <li key={index} className={`${state.leftActiveIndex === el.routeName ? 'active-left-menu' : ''}`}>
                                 <Popover placement="right" content={<Content props={el.routeUrl || []} />} trigger="hover">
                                     <div className="route-icon"></div>
                                 </Popover>

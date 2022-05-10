@@ -21,11 +21,17 @@
         height: 48px;
         border-radius: 6px;
         background-color: red;
+        transition: .3s all;
       }
       .route-one-level-name {
         font-size: 14px;
         margin-top: 8px;
       }
+    }
+    .active-left-menu{
+        .route-icon{
+            background-color: black;
+        }
     }
   }
 }

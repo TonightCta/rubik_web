@@ -13,18 +13,18 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
         Number(sessionStorage.getItem('header_activeIndex')) || 0,
         reducer.activeIndex.initActive);
     const location = useLocation();
-    useEffect((): void => {
-        // 进入页面获取activeIndex值
-        const storageActiveIndex = sessionStorage.getItem('header_activeIndex')
-        if (typeof (storageActiveIndex) == 'number') {
-            dispatch({
-                type: ActionType.CHANGE_ACTIVE_INDEX,
-                payload: { activeIndex: JSON.parse(storageActiveIndex) }
-            })
-        }
-    }, []);
+    // useEffect((): void => {
+    //     // 进入页面获取activeIndex值
+    //     const storageActiveIndex = sessionStorage.getItem('header_activeIndex')
+    //     if (typeof (storageActiveIndex) == 'number') {
+    //         dispatch({
+    //             type: ActionType.CHANGE_ACTIVE_INDEX,
+    //             payload: { activeIndex: JSON.parse(storageActiveIndex) }
+    //         })
+    //     }
+    // }, []);
     useMemo(() => {
-        debugger;
+        // debugger;
         console.log(location)
     }, []);
     useEffect((): void => {
