@@ -4,6 +4,7 @@ import './assets/css/reset.css'
 import RouteConfig from './route/route';
 import MenuHeader from './components/menu_header';
 import './app.scss'
+import LeftMenu from './components/LeftMenu/index';
 
 const App = (): React.ReactElement<ReactNode> => {
   return (
@@ -11,9 +12,7 @@ const App = (): React.ReactElement<ReactNode> => {
       {/* 头部导航 */}
       <MenuHeader/>
       <div className='content-box'>
-        <div className='menu'>
-          菜单
-        </div>
+        <LeftMenu/>
         <div className='view-box'>
           <RouteConfig />
         </div>
