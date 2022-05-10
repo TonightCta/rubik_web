@@ -16,6 +16,7 @@ interface Menu {
     routeUrl: LowerMenu[]
 }
 const LeftMenu = (): React.ReactElement<ReactNode> => {
+    //当前选中菜单
     const [state, dispatch] = useReducer(
         reducer.LeftActiveIndex.activeLeftReducer,
         sessionStorage.getItem('left_active_index') || 'Accounts',
@@ -36,6 +37,7 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
     // useEffect((): void => {
     //     console.log(state)
     // }, [])
+    //菜单列表
     const menuList: Menu[] = [
         {
             routeName: 'Accounts',
@@ -76,6 +78,7 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
             ]
         },
     ];
+    // 弹出菜单内容
     const Content = (uplevel: { props: LowerMenu[] }): ReactElement => {
         return (
             <div className="popover-list">
