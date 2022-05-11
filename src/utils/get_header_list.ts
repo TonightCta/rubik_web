@@ -1,115 +1,142 @@
 export const getHeaderList = (pathname: string) => {
   switch (pathname) {
-    case "/accounts":
-      return [
-        {
-          name: "my account",
-          path: "my-account",
-        },
-      ];
-    case "/accounts-book":
-      return [
-        {
-          name: "my contacts",
-          path: "my-contacts",
-        },
-      ];
-    case "/benefit":
-      return [
-        {
-          name: "Work report",
-          path: "work-report",
-        },
-        {
-          name: "storage",
-          path: "storage",
-        },
-      ];
-    case "/explorer":
-      return [
-        {
-          name: "chain info",
-          path: "chain-info",
-        },
-        {
-          name: "Block details",
-          path: "block-details",
-        },
-        {
-          name: "Forks",
-          path: "forks",
-        },
-        {
-          name: "tital storage",
-          path: "total-storage",
-        },
-      ];
-    case "Staking":
-      return [
-        {
-          name: "Overview",
-          path: "overview",
-        },
-        {
-          name: "Waiting",
-          path: "waiting",
-        },
-        {
-          name: "Account actions",
-          path: "account-actions",
-        },
-        {
-          name: "Target",
-          path: "target",
-        },
-        {
-          name: "Payouts",
-          path: "payouts",
-        },
-        {
-          name: "Slashes",
-          path: "slashes",
-        },
-        {
-          name: "Guardian stats",
-          path: "guardian-stats",
-        },
-      ];
-    case "/chain-state":
-      return [
-        {
-          name: "storage",
-          path: "chain-storage",
-        },
-        {
-          name: "contants",
-          path: "contants",
-        },
-        {
-          name: "Raw storage",
-          path: "raw-storage",
-        },
-      ];
-    case "/extrinsics":
-      return [
-        {
-          name: "Submission",
-          path: "submission",
-        },
-      ];
-    case "/settings":
-      return [
-        {
-          name: "General",
-          path: "general",
-        },
-      ];
+    case "accounts":
+      return {
+        title: "Accounts",
+        labelList: [
+          {
+            name: "my account",
+            path: "/account-view/my-account",
+          },
+        ],
+      };
+    case "accounts-book":
+      return {
+        title: "Accounts book",
+        labelList: [
+          {
+            name: "my contacts",
+            path: "/account-view/my-contacts",
+          },
+        ],
+      };
+    case "benefit":
+      return {
+        title: "Benefit",
+        labelList: [
+          {
+            name: "Work report",
+            path: "work-report",
+          },
+          {
+            name: "storage",
+            path: "storage",
+          },
+        ],
+      };
+    case "explorer":
+      return {
+        title: "Explorer",
+        labelList: [
+          {
+            name: "chain info",
+            path: "/explorer/chain-info",
+          },
+          {
+            name: "Block details",
+            path: "/explorer/block-details",
+          },
+          {
+            name: "Forks",
+            path: "/explorer/forks",
+          },
+          {
+            name: "tital storage",
+            path: "/explorer/total-storage",
+          },
+        ],
+      };
+    case "staking":
+      return {
+        title: "Staking",
+        labelList: [
+          {
+            name: "Overview",
+            path: "/staking/overview",
+          },
+          {
+            name: "Waiting",
+            path: "/staking/waiting",
+          },
+          {
+            name: "Account actions",
+            path: "/staking/account-actions",
+          },
+          {
+            name: "Target",
+            path: "/staking/target",
+          },
+          {
+            name: "Payouts",
+            path: "/staking/payouts",
+          },
+          {
+            name: "Slashes",
+            path: "/staking/slashes",
+          },
+          {
+            name: "Guardian stats",
+            path: "/staking/guardian-stats",
+          },
+        ],
+      };
+    case "chain-state":
+      return {
+        title: "Chain State",
+        labelList: [
+          {
+            name: "storage",
+            path: "/chain-state/chain-storage",
+          },
+          {
+            name: "contants",
+            path: "/chain-state/contants",
+          },
+          {
+            name: "Raw storage",
+            path: "/chain-state/raw-storage",
+          },
+        ],
+      };
+    case "extrinsics":
+      return {
+        title: "Extrinsics",
+        labelList: [
+          {
+            name: "Submission",
+            path: "/extrinsics/submission",
+          },
+        ],
+      };
+    case "settings":
+      return {
+        title: "Settings",
+        labelList: [
+          {
+            name: "General",
+            path: "/settings/general",
+          },
+        ],
+      };
     default:
-      return [
-        {
-          name: "my account",
-          path: "my-account",
-        },
-      ];
+      return {
+        title: "Accounts",
+        labelList: [
+          {
+            name: "my account",
+            path: "/account-view/my-account",
+          },
+        ],
+      };
   }
 };
