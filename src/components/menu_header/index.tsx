@@ -25,7 +25,7 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
     // }, []);
     useMemo(() => {
         // debugger;
-        console.log(location)
+        // console.log(location)
     }, []);
     useEffect((): void => {
         // 当activeIndex的发生改变时同步改变session        

@@ -24,13 +24,11 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
     );
 
     useEffect((): void => {
-        console.log(state.leftActiveIndex)
         sessionStorage.setItem('left_active_index', String(state.leftActiveIndex));
         // console.log(state.leftActiveIndex)
     }, [state.leftActiveIndex])
 
     const changeLeftActiveIndex = useCallback((leftActive: string): void => {
-        console.log(leftActive)
         dispatch({
             type: ActionType.CHANGE_LEFT_ACTIVE,
             payload: { leftActiveIndex: leftActive }

@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { Space, Table, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import IconFont from '../../../../components/icon_font'
@@ -58,26 +58,22 @@ const AccountTable = (): React.ReactElement => {
             key: 'HEIM',
             render: (text: string, record: any) => (
                 <div className="heim-oper-box">
-                    {
-                        record.downStatus ? <p>456</p> : ''
-                    }
+                    <p>123</p>
                     <p onClick={() => {
-                        console.log(record.rowKey);
-                        // record.downStatus = !record.downStatus
+                        console.log(123)
                     }}>1245</p>
                 </div>
             ),
         },
     ];
-
-    const [data,setData] = useState([
+    const data = [
         {
             key: '1',
             Accounts: 'User 1',
             Parent: '...',
             Type: 'sr25519',
-            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
-            downStatus: false,
+            TransacTions:'0xcdbca9ba.....9a9a9ac93e9a1b58',
+            downStatus:false,
             tags: [],
         },
         {
@@ -85,8 +81,8 @@ const AccountTable = (): React.ReactElement => {
             Accounts: 'User 2',
             Parent: '...',
             Type: 'sr25519',
-            downStatus: false,
-            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
+            downStatus:false,
+            TransacTions:'0xcdbca9ba.....9a9a9ac93e9a1b58',
             tags: ['loser'],
         },
         {
@@ -94,11 +90,11 @@ const AccountTable = (): React.ReactElement => {
             Accounts: 'User 3',
             Parent: '...',
             Type: 'sr25519',
-            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
-            downStatus: false,
+            TransacTions:'0xcdbca9ba.....9a9a9ac93e9a1b58',
+            downStatus:false,
             tags: ['cool', 'teacher'],
         },
-    ])
+    ];
 
     return (
         <div className="account-table">
