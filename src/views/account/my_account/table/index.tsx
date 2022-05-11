@@ -1,17 +1,21 @@
-import React, { ReactNode } from "react";
-import { Space, Table, Tag } from "antd";
+import React, { ReactNode,useState } from "react";
+import { Space, Table, Tag, Popover } from 'antd';
 import { ColumnsType } from "antd/lib/table";
 import IconFont from '../../../../components/icon_font'
+import index from "../../../index";
 
 interface TableColumns {
     title?: string,
     dataIndex?: string,
-    key: string,
+    key: number,
     render?: Function | ReactNode
 };
 
 const AccountTable = (): React.ReactElement => {
-
+    const [heimIndexClass,setHeimIndexClass] = useState({
+        heimIndex:-1,
+        listIndex:-1
+    })
     const columns: ColumnsType<TableColumns> = [
         {
             title: 'Accounts',
@@ -58,17 +62,30 @@ const AccountTable = (): React.ReactElement => {
             key: 'HEIM',
             render: (text: string, record: any) => (
                 <div className="heim-oper-box">
-                    <p>123</p>
-                    <p onClick={() => {
-                        console.log(123)
-                    }}>1245</p>
+                    <Popover
+                    title='title'
+                    trigger='click'
+                    visible={heimIndexClass.heimIndex == record.key}
+                    onVisibleChange={()=>{
+                        heimIndexClass.heimIndex == record.key?setHeimIndexClass({
+                            ...heimIndexClass,
+                            heimIndex:-1
+                        }):
+                        setHeimIndexClass({
+                            ...heimIndexClass,
+                            heimIndex:record.key
+                        })
+                    }}
+                    >
+                        <p>1234</p>
+                    </Popover>
                 </div>
             ),
         },
     ];
     const data = [
         {
-            key: '1',
+            key: 1,
             Accounts: 'User 1',
             Parent: '...',
             Type: 'sr25519',
@@ -77,7 +94,7 @@ const AccountTable = (): React.ReactElement => {
             tags: [],
         },
         {
-            key: '2',
+            key: 2,
             Accounts: 'User 2',
             Parent: '...',
             Type: 'sr25519',
@@ -86,7 +103,7 @@ const AccountTable = (): React.ReactElement => {
             tags: ['loser'],
         },
         {
-            key: '3',
+            key: 3,
             Accounts: 'User 3',
             Parent: '...',
             Type: 'sr25519',

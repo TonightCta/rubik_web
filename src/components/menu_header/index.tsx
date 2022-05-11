@@ -8,10 +8,6 @@ import reducer from "../../reducer/index";
 import { getHeaderList } from "../../utils/get_header_list";
 import { useLocation } from "react-router-dom";
 
-interface headerListItem {
-    name: string,
-    path: string
-}
 const MenuHeader = (): React.ReactElement<ReactNode> => {
     const [state, dispatch] = useReducer(
         reducer.activeIndex.activeReducer,

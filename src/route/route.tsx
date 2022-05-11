@@ -8,7 +8,7 @@ const RouteConfig = (): React.ReactElement<ReactNode> => {
             <Route path="/" element={<View.AccountView />}>
                 <Route index element={<View.MyAccount />}></Route>
             </Route>
-            <Route path="/setting" element={<View.SettingView />}>
+            <Route path="/settings" element={<View.SettingView />}>
                 <Route index element={<View.Gneral />}></Route>
             </Route>
         </Routes>
