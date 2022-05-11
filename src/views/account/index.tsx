@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 const AccountView = () : React.ReactElement<ReactNode> => {
     const navigate = useNavigate()
     useEffect(()=>{
-        navigate('/account-view/my-account')
+      
     },[])
     return (
         <div>

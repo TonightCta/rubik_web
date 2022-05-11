@@ -47,7 +47,7 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
             routeUrl: [
                 {
                     lowerName: 'My Account',
-                    lowerUrl: '/account-view',
+                    lowerUrl: '/',
                     levelOne:'Accounts'
                 },
             ]

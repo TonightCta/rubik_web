@@ -6,7 +6,7 @@ export const getHeaderList = (pathname: string) => {
         labelList: [
           {
             name: "my account",
-            path: "/account-view/my-account",
+            path: "/",
           },
         ],
       };
