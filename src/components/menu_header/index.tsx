@@ -8,9 +8,9 @@ import reducer from "../../reducer/index";
 import { getHeaderList } from "../../utils/get_header_list";
 import { useLocation } from "react-router-dom";
 
-interface headerListItem{
-    name:string,
-    path:string
+interface headerListItem {
+    name: string,
+    path: string
 }
 const MenuHeader = (): React.ReactElement<ReactNode> => {
     const [state, dispatch] = useReducer(
@@ -18,8 +18,8 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
         Number(sessionStorage.getItem('header_activeIndex')) || 0,
         reducer.activeIndex.initActive);
     const location = useLocation();
-    const [headerList,setHeaderList] = useState([
-        {name:'',path:''}
+    const [headerList, setHeaderList] = useState([
+        { name: '', path: '' }
     ])
     useMemo(() => {
         console.log(location)
@@ -28,14 +28,14 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
         // 当activeIndex的发生改变时同步改变session        
         sessionStorage.setItem('header_activeIndex', JSON.stringify(state.activeIndex))
     }, [state.activeIndex])
-    useEffect(():void =>{
+    useEffect((): void => {
         console.log(getHeaderList(location.pathname))
         setHeaderList(getHeaderList(location.pathname))
         dispatch({
-            type:ActionType.CHANGE_ACTIVE_INDEX,
-            payload:{activeIndex:0}
+            type: ActionType.CHANGE_ACTIVE_INDEX,
+            payload: { activeIndex: 0 }
         })
-    },[location.pathname])
+    }, [location.pathname])
     const changeActiveIndex = useCallback((activeIndex: number): void => {
         dispatch({
             type: ActionType.CHANGE_ACTIVE_INDEX,
@@ -57,9 +57,9 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
                 <p className="route-name">Accounts</p>
                 <ul>
                     {
-                        headerList.map((item,index)=>{
-                            return(
-                                <li className={`${state.activeIndex == index?'active-tab':''}`} onClick={():void =>{
+                        headerList.map((item, index) => {
+                            return (
+                                <li key={index} className={`${state.activeIndex == index ? 'active-tab' : ''}`} onClick={(): void => {
                                     changeActiveIndex(index)
                                 }}>
                                     {item.name}

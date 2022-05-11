@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import IconFont from "../../../../../components/icon_font";
-import { Modal, Tooltip } from "antd";
-import TestImg from '../../../../../assets/images/test.png'
+import { Modal, message } from "antd";
+import StepOne from "./step/create_step_one";
+import StepTwo from "./step/create_step_two";
+import StepThree from "./step/create_step_three";
+import TestImg from '../../../../../assets/images/test.png';
 import './index.scss'
 
 interface Props {
@@ -9,6 +12,9 @@ interface Props {
 }
 
 const AddAccount = (): React.ReactElement => {
+    const stepOneRef: any = useRef<HTMLDivElement>(null);
+    // const stepTwoRef: any = useRef<HTMLDivElement>(null);
+    const [accName, setAccName] = useState<string>('');
     // 窗口打开状态
     const [addAccount, setAddAcctount] = useState<boolean>(false);
     //创建步骤
@@ -32,8 +38,8 @@ const AddAccount = (): React.ReactElement => {
                             let nowStep: number;
                             switch (props.step) {
                                 case 1:
-                                    nowStep = 2;
-                                    // console.log(1)
+                                    nowStep = (!stepOneRef.current?.appove ? 1 : 2);
+                                    nowStep == 1 && message.error('Please Appove')
                                     break;
                                 case 2:
                                     nowStep = 3;
@@ -46,7 +52,9 @@ const AddAccount = (): React.ReactElement => {
                             <IconFont className="iconfont" type="icon-you_right" />
                             Next
                         </p>
-                        : <p>
+                        : <p onClick={(): void => {
+                            setAddAcctount(false)
+                        }}>
                             <IconFont className="iconfont" type="icon-dizhi" />
                             Done
                         </p>
@@ -54,50 +62,6 @@ const AddAccount = (): React.ReactElement => {
             </div>
         )
     };
-
-    // 步骤一
-
-    const StepOne = (): React.ReactElement => {
-        return (
-            <div className="add-step-one">
-                <div className="address-msg">
-                    <img src={TestImg} alt="" />
-                    <p>r7HRwYF2u9SoxQ473sx2izSJrqTiDUr2ucniifbtNbdC1Qvuf</p>
-                </div>
-                {/* 助记词 */}
-                <div className="word-box">
-                    <div className="word-help">
-                        <p>
-                            mnemonic seed
-                        </p>
-                        <Tooltip placement="top" title='Remark Text'>
-                            <IconFont className="iconfont" type="icon-shijian" />
-                        </Tooltip>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    // 步骤二
-
-    const StepTwo = (): React.ReactElement => {
-        return (
-            <div className="add-step-one">
-                步骤二
-            </div>
-        )
-    }
-
-    // 步骤三
-
-    const StepThree = (): React.ReactElement => {
-        return (
-            <div className="add-step-one">
-                步骤三
-            </div>
-        )
-    }
 
     return (
         <div className="add-account">
@@ -113,10 +77,23 @@ const AddAccount = (): React.ReactElement => {
             <Modal width="914px" onCancel={(): void => {
                 setAddAcctount(false);
             }} wrapClassName="add-account-modal" footer={<FooterTool step={addStep} />} title={`Add an account via seed ${addStep}/3`} visible={addAccount}>
+                <div className="address-msg">
+                    <img src={TestImg} alt="" />
+                    <p>
+                        {
+                            accName ?
+                                <span>
+                                    {accName}
+                                    <br />
+                                </span>
+                                : ''
+                        }
+                        r7HRwYF2u9SoxQ473sx2izSJrqTiDUr2ucniifbtNbdC1Qvuf</p>
+                </div>
                 {
                     [
-                        addStep == 1 && <StepOne key={1} />,
-                        addStep == 2 && <StepTwo key={2} />,
+                        addStep == 1 && <StepOne ref={stepOneRef} key={1} />,
+                        addStep == 2 && <StepTwo setInpName={setAccName} key={2} />,
                         addStep == 3 && <StepThree key={3} />
                     ]
                 }
