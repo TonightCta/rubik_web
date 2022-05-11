@@ -56,12 +56,12 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
             routeUrl: [
                 {
                     lowerName: 'Chain Info',
-                    lowerUrl: '/',
+                    lowerUrl: '/chain-info',
                     levelOne:'NetWork'
                 },
                 {
                     lowerName: 'Block Details',
-                    lowerUrl: '/',
+                    lowerUrl: '/block-details',
                     levelOne:'NetWork'
                 },
             ]
@@ -72,7 +72,7 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
             routeUrl: [
                 {
                     lowerName: 'Gneral',
-                    lowerUrl: '/setting',
+                    lowerUrl: '/settings',
                     levelOne:'Setting'
                 },
             ]
