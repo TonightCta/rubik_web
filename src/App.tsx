@@ -1,11 +1,11 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode,useEffect } from 'react';
 import './App.css';
 import './assets/css/reset.css'
 import RouteConfig from './route/route';
 import MenuHeader from './components/menu_header';
 import './app.scss'
 import LeftMenu from './components/left_menu/index';
-import { HashRouter } from 'react-router-dom'
+import { HashRouter, useNavigate } from 'react-router-dom';
 
 const App = (): React.ReactElement<ReactNode> => {
   return (

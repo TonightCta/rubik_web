@@ -8,12 +8,13 @@ import './index.scss'
 interface LowerMenu {
     lowerName: string,
     lowerUrl: string,
-    levelOne?:string
+    levelOne?:string,
 }
 interface Menu {
     routeName: string,
     routeIcon: string,
-    routeUrl: LowerMenu[]
+    routeUrl: LowerMenu[] | string
+    isRoute:boolean
 }
 const LeftMenu = (): React.ReactElement<ReactNode> => {
     //当前选中菜单
@@ -42,10 +43,11 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
         {
             routeName: 'Accounts',
             routeIcon: '-',
+            isRoute:true,
             routeUrl: [
                 {
                     lowerName: 'My Account',
-                    lowerUrl: '/',
+                    lowerUrl: '/account-view',
                     levelOne:'Accounts'
                 },
             ]
@@ -53,22 +55,41 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
         {
             routeName: 'NetWork',
             routeIcon: '-',
+            isRoute:true,
             routeUrl: [
                 {
-                    lowerName: 'Chain Info',
-                    lowerUrl: '/chain-info',
+                    lowerName:'explorer',
+                    lowerUrl:'/explorer',
                     levelOne:'NetWork'
                 },
                 {
-                    lowerName: 'Block Details',
-                    lowerUrl: '/block-details',
+                    lowerName:'staking',
+                    lowerUrl:'/staking',
                     levelOne:'NetWork'
+                }
+            ]
+        },
+        {
+            routeName:'Developer',
+            routeIcon:'-',
+            isRoute:true,
+            routeUrl:[
+                {
+                    lowerName:'Chain state',
+                    lowerUrl:'/chain-state',
+                    levelOne:'Developer'
                 },
+                {
+                    lowerName:'extrinsics',
+                    lowerUrl:'/extrinsics',
+                    levelOne:'Developer'
+                }
             ]
         },
         {
             routeName: 'Setting',
             routeIcon: '-',
+            isRoute:true,
             routeUrl: [
                 {
                     lowerName: 'Gneral',
@@ -77,6 +98,18 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
                 },
             ]
         },
+        {
+            routeName:'Github',
+            routeIcon:'-',
+            isRoute:false,
+            routeUrl:'https://github.com/mannheim-network'
+        },
+        {
+            routeName:'Wiki',
+            routeIcon:'-',
+            isRoute:false,
+            routeUrl:'https://github.com/mannheim-network/wiki'
+        }
     ];
     // 弹出菜单内容
     const Content = (uplevel: { props: LowerMenu[] }): ReactElement => {
@@ -100,15 +133,27 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
         <div className="left-menu">
             <ul>
                 {
-                    menuList.map((el: any, index: number): ReactElement => {
-                        return (
-                            <li key={index} className={`${state.leftActiveIndex === el.routeName ? 'active-left-menu' : ''}`}>
-                                <Popover placement="right" content={<Content props={el.routeUrl || []} />} trigger="hover">
+                    menuList.map((el: Menu, index: number): ReactElement => {
+                        if(el.isRoute){
+
+                            return (
+                                <li key={index} className={`${state.leftActiveIndex === el.routeName ? 'active-left-menu' : ''}`}>
+                                <Popover placement="right" content={<Content props={el.routeUrl as LowerMenu[] || []} />} trigger="hover">
                                     <div className="route-icon"></div>
                                 </Popover>
                                 <p className="route-one-level-name">{el.routeName}</p>
                             </li>
                         )
+                    }else {
+                        return(
+                            <li key={index} onClick={()=>{
+                                window.open(el.routeUrl as string)
+                            }}>
+                                <div className="route-icon"></div>
+                                <p className="route-one-level-name">{el.routeName}</p>
+                            </li>
+                        )
+                    }
                     })
                 }
             </ul>
