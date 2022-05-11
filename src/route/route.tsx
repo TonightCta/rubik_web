@@ -1,13 +1,12 @@
 import React, { ReactNode } from "react";
 import { Routes, Route } from 'react-router-dom';
 import * as View from '../views/view';
-import ExtrinsicsView from '../views/extrinsics/index';
 
 const RouteConfig = (): React.ReactElement<ReactNode> => {
     return (
         <Routes>
-            <Route path="/account-view" element={<View.AccountView />}>
-                <Route path="/account-view/my-account" element={<View.MyAccount />}></Route>
+            <Route path="/" element={<View.AccountView />}>
+                <Route index element={<View.MyAccount />}></Route>
             </Route>
             <Route path="/explorer" element={<View.ExplorerView />}>
                 <Route path="/explorer/chain-info" element={<View.ChainInfo />}></Route>
