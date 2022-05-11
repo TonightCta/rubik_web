@@ -8,7 +8,6 @@ import LeftMenu from './components/left_menu/index';
 import { HashRouter, useNavigate } from 'react-router-dom';
 
 const App = (): React.ReactElement<ReactNode> => {
-  
   return (
     <HashRouter>
       <div className="App">
