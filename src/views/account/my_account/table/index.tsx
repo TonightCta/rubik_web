@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { Space, Table, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import IconFont from '../../../../components/icon_font'
@@ -14,21 +14,19 @@ const AccountTable = (): React.ReactElement => {
 
     const columns: ColumnsType<TableColumns> = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render: (text: string) => <a>{text}</a>,
+            title: 'Accounts',
+            dataIndex: 'Accounts',
+            key: 'Accounts',
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Parent',
+            dataIndex: 'Parent',
+            key: 'Parent',
         },
-
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Type',
+            dataIndex: 'Type',
+            key: 'Type',
         },
         {
             title: 'Tags',
@@ -36,7 +34,7 @@ const AccountTable = (): React.ReactElement => {
             dataIndex: 'tags',
             render: (tags: []) => (
                 <>
-                    {tags.map((tag: any) => {
+                    {tags.length > 0 ? tags.map((tag: any) => {
                         let color = tag.length > 5 ? 'geekblue' : 'green';
                         if (tag === 'loser') {
                             color = 'volcano';
@@ -46,44 +44,61 @@ const AccountTable = (): React.ReactElement => {
                                 {tag.toUpperCase()}
                             </Tag>
                         );
-                    })}
+                    }) : 'No Tags'}
                 </>
             ),
         },
         {
-            title: 'Action',
-            key: 'action',
+            title: 'TransacTions',
+            dataIndex: 'TransacTions',
+            key: 'TransacTions',
+        },
+        {
+            title: 'HEIM',
+            key: 'HEIM',
             render: (text: string, record: any) => (
-                <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
-                </Space>
+                <div className="heim-oper-box">
+                    {
+                        record.downStatus ? <p>456</p> : ''
+                    }
+                    <p onClick={() => {
+                        console.log(record.rowKey);
+                        // record.downStatus = !record.downStatus
+                    }}>1245</p>
+                </div>
             ),
         },
     ];
-    const data = [
+
+    const [data,setData] = useState([
         {
             key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
+            Accounts: 'User 1',
+            Parent: '...',
+            Type: 'sr25519',
+            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
+            downStatus: false,
+            tags: [],
         },
         {
             key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
+            Accounts: 'User 2',
+            Parent: '...',
+            Type: 'sr25519',
+            downStatus: false,
+            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
             tags: ['loser'],
         },
         {
             key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
+            Accounts: 'User 3',
+            Parent: '...',
+            Type: 'sr25519',
+            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
+            downStatus: false,
             tags: ['cool', 'teacher'],
         },
-    ];
+    ])
 
     return (
         <div className="account-table">
