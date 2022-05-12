@@ -1,0 +1,35 @@
+.chain-info-page-table{
+    ul{
+        padding: 0px 58px;
+        width: 100%;
+        li{
+            display: flex;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            line-height: 30px;
+            .table-number{
+                font-size: 22px;
+                color:#827CF8;
+                width: 100px;
+            }
+            .table-hash{
+                font-size: 16px;
+                color:#797878;
+            }
+            .table-account{
+                display: flex;
+                justify-content: left;
+                .iconfont{
+                    font-size: 22px;
+                }
+                .account-name{
+                    font-size: 16px;
+                    color: #827CF8;
+                    display: inline-block;
+                    margin-left: 8px;
+                }
+            }
+        }
+    }
+}

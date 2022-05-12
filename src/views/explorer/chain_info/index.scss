@@ -1,0 +1,39 @@
+.chain-info-page{
+    padding: 39px 48px;
+   .chain-info-page-table-back{
+       width: 100%;
+       background-color: #f2f2f7;
+       border-radius: 14px;
+       padding: 25px 40px;
+       margin-top: 50px;
+       .chain-info-page-table-box{
+           width: 100%;
+           background-color: #fff;
+           border-radius: 20px;
+           padding-top: 11px;
+           padding-bottom: 35px;
+           .chain-info-page-switch{
+               height: 51px;
+               width: 273px;
+               margin: auto;
+               border-radius: 40px;
+               background-color: #E4E4FB;
+               color: #B8B7C8;
+               text-align: center;
+               line-height: 51px;
+               display: flex;
+               justify-content: space-between;
+               margin-bottom: 25px;
+               .switch-choose{
+                   background-color: #827CF8;
+                   color: #101010;
+                   border-radius: 40px;
+                   width: 50%;
+               }
+               .switch-unchoose{
+                   width: 50%;
+               }
+           }
+       }
+   } 
+}

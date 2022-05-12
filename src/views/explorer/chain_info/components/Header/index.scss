@@ -1,0 +1,57 @@
+.chain-info-page-header{
+    display: flex;
+    flex-wrap: wrap;
+    .first-card-box{
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+    }
+    .second-card-box{
+        display: flex;
+        width: 50%;
+        flex-wrap: wrap;
+        .explorer-card-box{
+            padding: 24px 80px;
+        }
+    }
+    .third-card-box{
+        display: flex;
+        margin-top: 26px;
+        width: 63%;
+    }
+    .have-icon{
+        margin-top: 36px;
+    }
+    .explorer-card-box{
+        padding: 45px;
+        background-color: #E5E5FB;
+        border-radius: 13px;
+        display: flex;
+        margin:auto;
+        text-align: center;
+        .explorer-card-box-icon{
+            font-size: 73px;
+        }
+        .explorer-card-content{
+            text-align: center;
+            width: 150px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            p{
+                margin: 0;
+            }
+            .explorer-card-content-header{
+                font-size: 22px;
+            }
+            .explorer-card-content-text{
+                font-size: 16px;
+            }
+        }
+        .explorer-card-content-left{
+            text-align: left;
+            margin-left: 30px;
+        }
+    }
+}
