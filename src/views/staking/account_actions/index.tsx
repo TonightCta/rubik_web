@@ -1,6 +1,6 @@
-import React,{ReactNode} from "react";
+import React, { ReactNode } from "react";
 
-const AccountActions = ():React.ReactElement<ReactNode>=>{
+const AccountActions = (): React.ReactElement<ReactNode> => {
     return (
         <div>
 

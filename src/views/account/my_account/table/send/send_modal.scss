@@ -1,0 +1,26 @@
+.footer-tool {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 16px;
+  padding-right: 52px;
+  p {
+    width: auto;
+    padding: 0 16px;
+    height: 36px;
+    transition: 0.3s all;
+    display: flex;
+    margin-left: 16px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 0;
+    .iconfont {
+      font-size: 20px;
+      margin-right: 4px;
+    }
+  }
+  p:hover {
+    background-color: $title-color;
+    color: white;
+  }
+}

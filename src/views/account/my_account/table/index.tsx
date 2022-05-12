@@ -1,8 +1,8 @@
-import React, { ReactNode,useState } from "react";
-import { Space, Table, Tag, Popover } from 'antd';
+import React, { ReactNode, useState, useRef, ReactHTMLElement, useCallback } from "react";
+import { Table, Tag, Popover, Switch } from 'antd';
 import { ColumnsType } from "antd/lib/table";
-import IconFont from '../../../../components/icon_font'
-import index from "../../../index";
+import IconFont from '../../../../components/icon_font';
+import SendBox from './send/send_modal'
 
 interface TableColumns {
     title?: string,
@@ -11,11 +11,37 @@ interface TableColumns {
     render?: Function | ReactNode
 };
 
+
 const AccountTable = (): React.ReactElement => {
-    const [heimIndexClass,setHeimIndexClass] = useState({
-        heimIndex:-1,
-        listIndex:-1
-    })
+    const [heimIndexClass, setHeimIndexClass] = useState({
+        heimIndex: -1,
+        listIndex: -1,
+        id: '',
+    });
+
+    const getSendMsg = useCallback(() : void => {
+        console.log('Send Emit Message')
+    },[])
+
+    const sendBoxRef : any = useRef<HTMLDivElement>(null);
+    
+    const MoreHeim = (props: { id: string }): React.ReactElement => {
+        return (
+            <div className="more-heim-oper">
+                <ul>
+                    <li>Set on-chain identity</li>
+                    <li>Derive account via derivation path</li>
+                    <li>Create a backup file for this accout</li>
+                    <li>Delegate democracy votes</li>
+                </ul>
+                <div className="row-switch">
+                    only this network&nbsp;&nbsp;&nbsp;
+                    <Switch defaultChecked />
+                </div>
+            </div>
+        )
+    }
+
     const columns: ColumnsType<TableColumns> = [
         {
             title: 'Accounts',
@@ -58,27 +84,54 @@ const AccountTable = (): React.ReactElement => {
             key: 'TransacTions',
         },
         {
-            title: 'HEIM',
+            title: (<span style={{ display: 'table', margin: '0 auto' }}>HEIM</span>),
             key: 'HEIM',
             render: (text: string, record: any) => (
                 <div className="heim-oper-box">
-                    <Popover
-                    title='title'
-                    trigger='click'
-                    visible={heimIndexClass.heimIndex == record.key}
-                    onVisibleChange={()=>{
-                        heimIndexClass.heimIndex == record.key?setHeimIndexClass({
-                            ...heimIndexClass,
-                            heimIndex:-1
-                        }):
+                    <div className="heim-trans">
+                        <div className="trans-out" onClick={(): void => {
+                            setHeimIndexClass({
+                                ...heimIndexClass,
+                                listIndex: heimIndexClass.listIndex == record.key ? - 1 : record.key
+                            })
+                        }}>
+                            <p>0.0000 HEIM</p>
+                            <IconFont className={`iconfont ${heimIndexClass.listIndex == record.key ? 'show-icon-heim' : ''}`} type="icon-you_right" />
+                        </div>
+                        {
+                            heimIndexClass.listIndex == record.key &&
+                            <p>transferrable   0.0000 HEIM</p>
+                        }
+                    </div>
+                    <div className="send-box" onClick={(): void => {
                         setHeimIndexClass({
                             ...heimIndexClass,
-                            heimIndex:record.key
-                        })
-                    }}
+                            id: record.key
+                        });
+                        sendBoxRef.current?.emitSetSendBox(true);
+                    }}>
+                        <IconFont className="iconfont more-heim-icon" type="icon-lianshu" />
+                        Send
+                    </div>
+                    <Popover
+                        placement="bottom"
+                        trigger='click'
+                        content={<MoreHeim id={record.key} />}
+                        visible={heimIndexClass.heimIndex == record.key}
+                        onVisibleChange={() => {
+                            heimIndexClass.heimIndex == record.key ? setHeimIndexClass({
+                                ...heimIndexClass,
+                                heimIndex: -1
+                            }) :
+                                setHeimIndexClass({
+                                    ...heimIndexClass,
+                                    heimIndex: record.key
+                                })
+                        }}
                     >
-                        <p>1234</p>
+                        <IconFont className="iconfont more-heim-icon" type="icon-dizhi" />
                     </Popover>
+                    <IconFont className="iconfont more-heim-icon out-link" type="icon-xingxing_star" />
                 </div>
             ),
         },
@@ -89,8 +142,8 @@ const AccountTable = (): React.ReactElement => {
             Accounts: 'User 1',
             Parent: '...',
             Type: 'sr25519',
-            TransacTions:'0xcdbca9ba.....9a9a9ac93e9a1b58',
-            downStatus:false,
+            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
+            downStatus: false,
             tags: [],
         },
         {
@@ -98,8 +151,8 @@ const AccountTable = (): React.ReactElement => {
             Accounts: 'User 2',
             Parent: '...',
             Type: 'sr25519',
-            downStatus:false,
-            TransacTions:'0xcdbca9ba.....9a9a9ac93e9a1b58',
+            downStatus: false,
+            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
             tags: ['loser'],
         },
         {
@@ -107,8 +160,8 @@ const AccountTable = (): React.ReactElement => {
             Accounts: 'User 3',
             Parent: '...',
             Type: 'sr25519',
-            TransacTions:'0xcdbca9ba.....9a9a9ac93e9a1b58',
-            downStatus:false,
+            TransacTions: '0xcdbca9ba.....9a9a9ac93e9a1b58',
+            downStatus: false,
             tags: ['cool', 'teacher'],
         },
     ];
@@ -120,6 +173,7 @@ const AccountTable = (): React.ReactElement => {
                 <input type="text" placeholder="Type Here" />
             </div>
             <Table<TableColumns> bordered={false} columns={columns} dataSource={data}></Table>
+            <SendBox id={heimIndexClass.id} ref={sendBoxRef} getSendMsg={getSendMsg}/>
         </div>
     )
 };

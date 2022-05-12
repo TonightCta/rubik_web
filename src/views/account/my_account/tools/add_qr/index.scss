@@ -1,0 +1,16 @@
+.qr-modal-content {
+  width: 306px;
+  height: 306px;
+  background-color: #ccc;
+  margin: 0 auto;
+  margin-bottom: 32px;
+  padding: 30px;
+  .qr-box {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
+}
+ .qr-box-remark{
+  text-align: center;
+}

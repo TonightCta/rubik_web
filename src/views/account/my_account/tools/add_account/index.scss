@@ -1,27 +1,3 @@
-.footer-tool {
-  display: flex;
-  justify-content: flex-end;
-  padding-bottom: 16px;
-  padding-right: 52px;
-  p {
-    width: 84px;
-    height: 36px;
-    transition: 0.3s all;
-    display: flex;
-    margin-left: 16px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-bottom: 0;
-    .iconfont {
-      font-size: 20px;
-    }
-  }
-  p:hover {
-    background-color: $title-color;
-    color: white;
-  }
-}
 .address-msg {
   display: flex;
   img {
@@ -131,24 +107,6 @@
     }
   }
 }
-.attention-box {
-  padding: 20px;
-  background-color: #fff1d7;
-  border-radius: 5px;
-  position: relative;
-  margin-top: 18px;
-  .iconfont {
-    font-size: 16px;
-    position: absolute;
-    left: 24px;
-    top: 22px;
-  }
-  p {
-    font-size: 14px;
-    text-indent: 24px;
-    margin-bottom: 0;
-  }
-}
 .check-protocol {
   margin-top: 18px;
   display: flex;
@@ -160,18 +118,6 @@
     padding: 16px;
     background-color: white;
     margin-bottom: 16px;
-    .public-title {
-      display: flex;
-      align-items: center;
-      p {
-        margin-bottom: 0;
-        font-size: 12px;
-      }
-      .iconfont {
-        cursor: pointer;
-        margin-left: 8px;
-      }
-    }
     input {
       margin-top: 12px;
       font-size: 13px;
@@ -179,6 +125,7 @@
   }
 }
 .add-step-three {
+  padding-top: 24px;
   .show-inp {
     p {
       margin-bottom: 0;
