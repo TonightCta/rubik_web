@@ -29,14 +29,14 @@ const SendHBox = React.forwardRef((props: Props, ref: any): React.ReactElement<R
                     Cancel
                 </p>
                 {
-                    sendStep == 1 ? <p key="cancel" onClick={(): void => {
+                    sendStep == 1 ? <p key="make" onClick={(): void => {
                             setSendStep(2);
                         }}>
                             <IconFont className="iconfont" type="icon-you_right" />
                             Make ransfer
                         </p>
                         :
-                        <p key="cancel" onClick={(): void => {
+                        <p key="down" onClick={(): void => {
                             setSendBoxStatus(false);
                         }}>
                             <IconFont className="iconfont" type="icon-xingxing_star" />
@@ -55,8 +55,8 @@ const SendHBox = React.forwardRef((props: Props, ref: any): React.ReactElement<R
         }}>
             {
                 [
-                    sendStep == 1 && <SendStepOne />,
-                    sendStep == 2 && <SendStepTwo />,
+                    sendStep == 1 && <SendStepOne key={1}/>,
+                    sendStep == 2 && <SendStepTwo key={2}/>,
                 ]
             }
         </Modal>

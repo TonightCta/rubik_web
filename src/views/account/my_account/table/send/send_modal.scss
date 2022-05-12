@@ -24,3 +24,103 @@
     color: white;
   }
 }
+.send-account {
+  padding: 12px 30px;
+  background-color: white;
+  position: relative;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  .account-avatar {
+    width: 34px;
+    height: 34px;
+    background-color: $title-color;
+    border-radius: 50%;
+    position: absolute;
+    left: -17px;
+    top: 50%;
+    margin-top: -17px;
+  }
+  .title-and-transfer {
+    display: flex;
+    align-items: center;
+    p {
+      margin-bottom: 0;
+      font-size: 13px;
+      color: #777;
+    }
+    justify-content: space-between;
+  }
+  .send-address {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    align-items: center;
+    position: relative;
+    p {
+      margin-bottom: 0;
+    }
+    p:last-child {
+      font-size: 12px;
+    }
+    // .send-to-address {
+    //   position: absolute;
+    //   right:0;
+    //   bottom: 0;
+    // }
+    .ant-select-selector {
+      padding: 0 !important;
+      .ant-select-selection-search {
+        left: 0 !important;
+      }
+    }
+  }
+}
+.send-remark-text {
+  font-size: 13px;
+  color: #777;
+}
+.send-amount {
+  padding: 12px 30px;
+  border-radius: 8px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  p{
+    margin-bottom: 0;
+  }
+  .amount-msg {
+    flex: 1;
+    input {
+      font-size: 13px;
+      margin-top: 12px;
+    }
+  }
+}
+.checks-transfer{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+  p{
+    margin:0 24px 14px 0;
+  }
+}
+.attention-box {
+  padding: 20px;
+  background-color: #fff1d7;
+  border-radius: 5px;
+  position: relative;
+  margin-top: 18px;
+  .iconfont {
+    font-size: 16px;
+    position: absolute;
+    left: 24px;
+    top: 22px;
+  }
+  p {
+    font-size: 14px;
+    text-indent: 24px;
+    margin-bottom: 0;
+  }
+}
