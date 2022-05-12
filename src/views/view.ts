@@ -9,7 +9,7 @@ import ChainStateView from "./chain_state";
 import ChainStorage from "./chain_state/chain_storage";
 import Contants from "./chain_state/contants";
 import RawStorage from "./chain_state/raw_storage";
-import ChainInfo from "./explorer/chain_info/components";
+import ChainInfo from "./explorer/chain_info";
 import Forks from "./explorer/forks";
 import TotalStorage from "./explorer/total_storage";
 import Submission from "./extrinsics/Submission";
