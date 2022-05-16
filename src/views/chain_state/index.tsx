@@ -4,9 +4,9 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 const ChainStateView = (): React.ReactElement<ReactNode> => {
   const navigate = useNavigate()
-  useEffect(() => {
-    navigate('/chain-state/chain-storage')
-  }, [])
+  useEffect(()=>{
+    navigate('/explorer/chain-info')
+  },[])
   return (
     <div style={{padding:'30px 40px'}}>
       <Outlet></Outlet>
