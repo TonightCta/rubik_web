@@ -5,7 +5,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 const ChainStateView = ():React.ReactElement<ReactNode> => {
   const navigate = useNavigate()
   useEffect(()=>{
-    // navigate('/chain-state/chain-storage')
+    navigate('/explorer/chain-info')
   },[])
   return (
       <div>

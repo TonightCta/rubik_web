@@ -1,0 +1,23 @@
+.border-dashed-box{
+    border: 1px dashed #c6c6c6;
+    padding: 6px;
+    text-align: left;
+    width: 80%;
+    margin-left:14px;
+    margin-bottom: 5px;
+    .dashed-header{
+        color: #959595;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    .dashed-content{
+        color: #464646;
+        line-height: 20px;
+        font-size: 14px;
+        word-wrap: break-word;
+        white-space: nowrap;
+        width: 100%;
+        text-overflow: ellipsis;
+    }
+
+}
