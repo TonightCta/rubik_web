@@ -24,8 +24,8 @@ class PolkadotConfig {
 
         const addr: string = '5DTestUPts3kjeXSTMyerHihn1uwMfLj8vU8sqF7qYrFabHE';
         const balance = await this.api.query.balances.account(addr);
-        const nonce = await this.api.query.system.blockHash(addr);
-        console.log(`${addr} blance is ${balance},Now blockhash is ${nonce}`);
+        // const nonce = await this.api.query.system.blockHash(addr);
+        console.log(`${addr} blance is ${balance}`);
 
     }
 }

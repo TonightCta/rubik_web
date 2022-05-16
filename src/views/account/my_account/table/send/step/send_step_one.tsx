@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { Select, Switch } from "antd";
 import InpTitle from "../../../../../../components/inp_title/inp_title";
 import IconFont from "../../../../../../components/icon_font";
-// import PolkadotConfig from '../../../../../../utils/api'
+import PolkadotConfig from '../../../../../../utils/api'
 
 const { Option } = Select;
 
@@ -18,14 +18,14 @@ const SendStepOne = (): React.ReactElement<ReactNode> => {
                 <div className="title-and-transfer">
                     <InpTitle title="Send From Account" desc="Remark Text" />
                     <p>
-                        transferrable&nbsp;0.0000&nbsp;HEMI 123
+                        transferrable&nbsp;0.0000&nbsp;HEMI
                     </p>
                 </div>
                 <div className="send-address">
                     <p onClick={() => {
-                        console.log(123)
-                        // const { getBlockHash } = PolkadotConfig;
-                        // getBlockHash()
+                        // console.log(456)
+                        const { getBlockHash } = PolkadotConfig;
+                        getBlockHash()
                     }}>DARA</p>
                     <p>r7Gs7wsbwcdfRUjcxC13o9ZczgDRKQqgx4jJZMoeUjfFn7ENs...</p>
                 </div>
