@@ -1,0 +1,108 @@
+.extrinsics {
+  width: 100%;
+  tr {
+
+    .extrinsics-th {
+      width: 30%;
+      text-align: left;
+      .extrinsics-span {
+        line-height: 30px;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: left;
+        display: inline-block;
+        width: 80%;
+        color: #101010;
+      }
+    }
+    .last-th {
+      width: 15%;
+    }
+    p {
+      color: #101010;
+      line-height: 11px;
+      font-size: 14px;
+    }
+    .iconfont {
+      font-size: 14px;
+    }
+    .extrinsics-table-item {
+      text-align: left;
+      margin-top: 10px;
+      .item-content {
+        .item-content-hedaer-content {
+          color: #7d7d7d;
+        }
+        .show-icon {
+          transform: rotate(-90deg);
+        }
+      }
+      .item-content-header-content {
+        color: #7d7d7d;
+        font-size: 14px;
+      }
+      .iconfont-rotate {
+        transform: translateY(1px) rotate(90deg);
+        transition: 0.3s all;
+        margin-left: 4px;
+      }
+      .show-content-item {
+        width: 96%;
+        display: flex;
+        justify-content: space-between;
+        transition: 1s all;
+        height: 100%;
+        .left-bar {
+          width: 4px;
+          background: #eaeaea;
+        }
+        .right-bar {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 100%;
+          .bar-item {
+              width: 80%;
+              margin-bottom: 5px;
+              margin-left: 14px;
+              border: 1px #c6c6c6 dashed;
+              padding: 9px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            text-align: left;
+            // .bar-item-header {
+            //   color: #959595;
+            //   font-size: 12px;
+            //   line-height: 20px;
+            //   margin: 0;
+            // }
+            // .bar-item-content {
+            //   color: #464646;
+            //   font-size: 14px;
+            //   width: 100%;
+            //   margin: 0;
+              
+              .iconfont {
+                width: 5%;
+              }
+            // }
+            .system-bar-item-content {
+              color: #535353;
+              font-size: 12px;
+              text-align: left;
+              line-height: 20px;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }.extrinsics-span {
+                width: 93%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                display: inline-block;
+              }
+} 

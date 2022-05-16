@@ -189,3 +189,6 @@ input {
 .text-right{
 	text-align: right;
 }
+.display-none{
+	display:none;
+}
