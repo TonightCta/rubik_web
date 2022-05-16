@@ -1,0 +1,64 @@
+.chain-storage {
+  min-height: 600px;
+  height: 100%;
+  width: 100%;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  padding: 60px 45px;
+  .create-select {
+    display: flex;
+    align-items: center;
+    .create-icon {
+      margin-left: 24px;
+      font-size: 30px;
+      cursor: pointer;
+      color: $title-color;
+    }
+  }
+  .selected-option {
+    padding: 12px 24px;
+    flex: 1;
+    background-color: white;
+    border-radius: 20px;
+    .option-inner {
+      margin-top: 12px;
+      display: flex;
+      text-align: left;
+      .test-option {
+        background-color: red !important;
+      }
+      .option-deep {
+        display: flex;
+        justify-content: space-between;
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  .result-inner-parent {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    .result-inner {
+      padding:12px 24px;
+      background-color: white;
+      border-radius: 20px;
+      flex: 1;
+      p{
+        margin-bottom: 0;
+        text-align: left;
+      }
+      p:last-child{
+        margin-top: 8px;
+        color:#666;
+      }
+    }
+    .iconfont {
+      font-size: 30px;
+      color: $title-color;
+      margin-left: 24px;
+      cursor: pointer;
+    }
+  }
+}

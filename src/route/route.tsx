@@ -24,7 +24,7 @@ const RouteConfig = (): React.ReactElement<ReactNode> => {
                 <Route path="/staking/guardian-stats" element={<View.GuardianStats />}></Route>
             </Route>
             <Route path="/chain-state" element={<View.ChainStateView />}>
-                <Route path="/chain-state/chain-stotage" element={<View.ChainStorage />}></Route>
+                <Route path="/chain-state/chain-storage" element={<View.ChainStorage />}></Route>
                 <Route path="/chain-state/contants" element={<View.Contants />}></Route>
                 <Route path="/chain-state/raw-storage" element={<View.RawStorage />}></Route>
             </Route>
@@ -32,7 +32,7 @@ const RouteConfig = (): React.ReactElement<ReactNode> => {
                 <Route path="/extrinsics/submission" element={<View.Submission/>}></Route>
             </Route>
             <Route path="/settings" element={<View.SettingView />}>
-                <Route path="/settings/general" element={<View.Gneral />}></Route>
+                <Route index element={<View.Gneral />}></Route>
             </Route>
         </Routes>
     )

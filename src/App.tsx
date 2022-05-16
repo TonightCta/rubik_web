@@ -6,6 +6,7 @@ import MenuHeader from './components/menu_header';
 import './app.scss'
 import LeftMenu from './components/left_menu/index';
 import { HashRouter, useNavigate } from 'react-router-dom';
+// import './utils/api';
 
 const App = (): React.ReactElement<ReactNode> => {
   return (

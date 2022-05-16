@@ -58,12 +58,12 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
             isRoute:true,
             routeUrl: [
                 {
-                    lowerName:'explorer',
+                    lowerName:'Explorer',
                     lowerUrl:'/explorer',
                     levelOne:'NetWork'
                 },
                 {
-                    lowerName:'staking',
+                    lowerName:'Staking',
                     lowerUrl:'/staking',
                     levelOne:'NetWork'
                 }
@@ -80,7 +80,7 @@ const LeftMenu = (): React.ReactElement<ReactNode> => {
                     levelOne:'Developer'
                 },
                 {
-                    lowerName:'extrinsics',
+                    lowerName:'Extrinsics',
                     lowerUrl:'/extrinsics',
                     levelOne:'Developer'
                 }

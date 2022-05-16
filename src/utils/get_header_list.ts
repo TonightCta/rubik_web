@@ -5,7 +5,7 @@ export const getHeaderList = (pathname: string) => {
         title: "Accounts",
         labelList: [
           {
-            name: "my account",
+            name: "My Account",
             path: "/",
           },
         ],
@@ -15,7 +15,7 @@ export const getHeaderList = (pathname: string) => {
         title: "Accounts book",
         labelList: [
           {
-            name: "my contacts",
+            name: "My Contacts",
             path: "/account-view/my-contacts",
           },
         ],
@@ -95,11 +95,11 @@ export const getHeaderList = (pathname: string) => {
         title: "Chain State",
         labelList: [
           {
-            name: "storage",
+            name: "Storage",
             path: "/chain-state/chain-storage",
           },
           {
-            name: "contants",
+            name: "Contants",
             path: "/chain-state/contants",
           },
           {
