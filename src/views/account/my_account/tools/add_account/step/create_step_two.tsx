@@ -1,6 +1,8 @@
-import React, { useImperativeHandle, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { Tooltip } from 'antd';
-import IconFont from '../../../../../../components/icon_font'
+import IconFont from '../../../../../../components/icon_font';
+import PolkadotConfig from '../../../../../../utils/api';
+
 
 interface Props {
     title: string,
@@ -25,6 +27,9 @@ const PublicTitle = (props: Props): React.ReactElement => {
 };
 
 const StepTwo = React.forwardRef((props: any, ref): React.ReactElement => {
+    useEffect(() => {
+        console.log(123)
+    },[])
     const [accountMsg, setAccountMsg] = useState<PassFilter>({
         name: '',
         password: '',
@@ -42,7 +47,6 @@ const StepTwo = React.forwardRef((props: any, ref): React.ReactElement => {
                         ...accountMsg,
                         name: e.target.value
                     });
-                    console.log(props);
                     props.setInpName(e.target.value);
                 }} placeholder="New Account" />
             </div>

@@ -29,7 +29,6 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
     });
     useEffect((): void => {
         // 当activeIndex的发生改变时同步改变session
-        console.log(state.activeIndex);
         sessionStorage.setItem(
             "header_activeIndex",
             JSON.stringify(state.activeIndex)
@@ -39,7 +38,6 @@ const MenuHeader = (): React.ReactElement<ReactNode> => {
         }
     }, [state.activeIndex]);
     useEffect((): void => {
-        console.log(getHeaderList(location.pathname.split("/")[1]));
         setHeaderList(getHeaderList(location.pathname.split("/")[1]));
         dispatch({
             type: ActionType.CHANGE_ACTIVE_INDEX,

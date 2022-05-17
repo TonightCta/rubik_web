@@ -120,6 +120,7 @@
     margin-bottom: 16px;
     input {
       margin-top: 12px;
+      width: 100%;
       font-size: 13px;
     }
   }
@@ -137,4 +138,8 @@
       color: #666;
     }
   }
+}
+.ant-select-selector{
+  margin-top: 12px;
+  padding: 0!important;
 }
