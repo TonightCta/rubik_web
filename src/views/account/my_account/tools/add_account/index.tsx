@@ -13,12 +13,15 @@ interface Props {
 
 const AddAccount = (): React.ReactElement => {
     const stepOneRef: any = useRef<HTMLDivElement>(null);
+    const stepTwoRef: any = useRef<HTMLDivElement>(null);
     // const stepTwoRef: any = useRef<HTMLDivElement>(null);
     const [accName, setAccName] = useState<string>('');
     // 窗口打开状态
     const [addAccount, setAddAcctount] = useState<boolean>(false);
     //创建步骤
     const [addStep, setAddStep] = useState<number>(1);
+    // 生成地址
+    const [resultAddress, setResultAddress] = useState<string>('')
     useEffect((): void => {
         !addAccount && setAddStep(1)
     }, [addAccount])
@@ -43,6 +46,7 @@ const AddAccount = (): React.ReactElement => {
                                     break;
                                 case 2:
                                     nowStep = 3;
+                                    console.log(stepTwoRef.current)
                                     break;
                                 default:
                                     nowStep = 1;
@@ -88,12 +92,13 @@ const AddAccount = (): React.ReactElement => {
                                 </span>
                                 : ''
                         }
-                        r7HRwYF2u9SoxQ473sx2izSJrqTiDUr2ucniifbtNbdC1Qvuf</p>
+                        {resultAddress ? resultAddress : '5xxxxxxxxxxxxxxxxxxx'}
+                    </p>
                 </div>
                 {
                     [
-                        addStep == 1 && <StepOne ref={stepOneRef} key={1} />,
-                        addStep == 2 && <StepTwo setInpName={setAccName} key={2} />,
+                        addStep == 1 && <StepOne updateAddress={setResultAddress} ref={stepOneRef} key={1} />,
+                        addStep == 2 && <StepTwo ref={stepTwoRef} setInpName={setAccName} key={2} />,
                         addStep == 3 && <StepThree key={3} />
                     ]
                 }
