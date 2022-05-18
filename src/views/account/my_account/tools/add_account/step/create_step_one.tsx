@@ -73,9 +73,10 @@ const StepOne = React.forwardRef((props: Props, ref: any): React.ReactElement =>
     const getDefaultCreate = async (): Promise<void> => {
         const { createWalletOne } = PolkadotConfig;
         const result: any = await createWalletOne(wordType.idsType, cryptoType, wordType.operType, setpOneMsg.mnemonic);
-        const nextNeed: { mnemonic: string, pairType: string } = {
+        const nextNeed: { mnemonic: string, pairType: string, address: string } = {
             mnemonic: result.mnemonic,
-            pairType: cryptoType
+            pairType: cryptoType,
+            address: result.address
         };
         sessionStorage.setItem('createTwoMsg', JSON.stringify(nextNeed));
         const { updateAddress } = props;

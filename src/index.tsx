@@ -2,17 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import '@polkadot/wasm-crypto/initWasmAsm';
+
 // import './config-overrides'
 import reportWebVitals from './reportWebVitals';
+import { waitReady } from '@polkadot/wasm-crypto'
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  // <React.StrictMode>
+
+
+waitReady().then(() => {
+  const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+  );
+  // keyring.loadAll({ ss58Format: 42, type: 'sr25519' });
+  root.render(
+    // <React.StrictMode>
     <App />
-  // </React.StrictMode>
-);
+    // </React.StrictMode>
+  );
+})
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -5,15 +5,26 @@ import StepOne from "./step/create_step_one";
 import StepTwo from "./step/create_step_two";
 import StepThree from "./step/create_step_three";
 import TestImg from '../../../../../assets/images/test.png';
+import PolkadotConfig from '../../../../../utils/api';
+
 import './index.scss'
 
 interface Props {
     step: number
 }
+interface PassFilter {
+    name: string,
+    password: string,
+    repeatpass: string
+}
 
 const AddAccount = (): React.ReactElement => {
     const stepOneRef: any = useRef<HTMLDivElement>(null);
-    const stepTwoRef: any = useRef<HTMLDivElement>(null);
+    const [accountMsg, setAccountMsg] = useState<PassFilter>({
+        name: '',
+        password: '',
+        repeatpass: ''
+    });
     // const stepTwoRef: any = useRef<HTMLDivElement>(null);
     const [accName, setAccName] = useState<string>('');
     // 窗口打开状态
@@ -37,7 +48,7 @@ const AddAccount = (): React.ReactElement => {
                 </p>
                 {
                     props.step < 3
-                        ? <p onClick={(): void => {
+                        ? <p onClick={ async (): Promise<void> => {
                             let nowStep: number;
                             switch (props.step) {
                                 case 1:
@@ -45,8 +56,28 @@ const AddAccount = (): React.ReactElement => {
                                     nowStep == 1 && message.error('Please Appove')
                                     break;
                                 case 2:
-                                    nowStep = 3;
-                                    console.log(stepTwoRef.current)
+                                    const msg = accountMsg;
+                                    if (!msg.name) {
+                                        message.error('Please enter account name');
+                                        return;
+                                    };
+                                    if (!msg.password) {
+                                        message.error('Please enter password');
+                                        return;
+                                    };
+                                    if (!msg.repeatpass) {
+                                        message.error('Please enter password repeat');
+                                        return;
+                                    };
+                                    if (msg.repeatpass !== msg.password) {
+                                        message.error('Password does not match');
+                                        return;
+                                    };
+                                    nowStep = 2;
+                                    const hasData = JSON.parse(sessionStorage.getItem('createTwoMsg') as string)
+                                    const { createWalletTwo } = PolkadotConfig;
+                                    const result = await createWalletTwo(hasData.address,msg.name,msg.password,hasData.mnemonic,hasData.pairType);
+                                    console.log(result);
                                     break;
                                 default:
                                     nowStep = 1;
@@ -98,7 +129,7 @@ const AddAccount = (): React.ReactElement => {
                 {
                     [
                         addStep == 1 && <StepOne updateAddress={setResultAddress} ref={stepOneRef} key={1} />,
-                        addStep == 2 && <StepTwo ref={stepTwoRef} setInpName={setAccName} key={2} />,
+                        addStep == 2 && <StepTwo accountMsg={accountMsg} setAccountMsg={setAccountMsg} setInpName={setAccName} key={2} />,
                         addStep == 3 && <StepThree key={3} />
                     ]
                 }
