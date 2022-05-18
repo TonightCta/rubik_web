@@ -23,7 +23,6 @@ class PolkadotConfig {
             // const test = await this.api.isReady();
             console.log(this.api)
             console.log(this.api._isReady);
-            console.log(isWasm)
         };
         initPolkadotConfing();
     };
@@ -91,7 +90,9 @@ class PolkadotConfig {
             const setPair = keyring.addUri(mnemonic, password, { genesisHash, isHardware: false, walletName, tags }, pairType);
             // return setPair;
         })
-    }
+    };
+    // 获取账户列表
+
 }
 export default new PolkadotConfig();
 
