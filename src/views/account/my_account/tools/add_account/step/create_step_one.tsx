@@ -1,33 +1,100 @@
-import React, { useState, useImperativeHandle } from "react";
-import { Tooltip, Popover, Checkbox } from 'antd';
-import IconFont from '../../../../../../components/icon_font'
+import React, { useState, useImperativeHandle, useEffect } from "react";
+import { Tooltip, Popover, Checkbox, Select } from 'antd';
+import IconFont from '../../../../../../components/icon_font';
+import PolkadotConfig from '../../../../../../utils/api';
+// import { useDebouncedCallback } from 'use-debounce'
 
-const StepOne = React.forwardRef((props, ref): React.ReactElement => {
+const { Option } = Select;
+
+interface CreateParent {
+    address: string,
+    mnemonic: string,
+}
+
+interface Props {
+    updateAddress: Function
+}
+
+const StepOne = React.forwardRef((props: Props, ref: any): React.ReactElement => {
     // 助记词类型
-    const [wordType, setWordType] = useState<number>(1);
+    const [wordType, setWordType] = useState<{ idsType: number, operType: number }>({
+        idsType: 1,
+        operType: 1,
+    });
+    // 弹出框显示&隐藏
     const [popShow, setPopShow] = useState<boolean>(false);
+    // 协议同意
     const [appove, setAppove] = useState<boolean>(false);
+    // 高级选项打开状态
     const [optionsStatus, setOptionsStatus] = useState<boolean>(false);
+    // 生成密钥信息
+    const [setpOneMsg, setStepOneMsg] = useState<CreateParent>({
+        address: '',
+        mnemonic: '',
+    });
+    // 密钥加密方式
+    const [cryptoType, setCryptoType] = useState<string>('sr25519');
     const WordType = (): React.ReactElement => {
         return (
             <div className="word-type-inner">
                 <p onClick={(): void => {
-                    setWordType(1);
-                    setPopShow(false)
+                    setWordType({
+                        idsType: 1,
+                        operType: 1,
+                    });
+                    setPopShow(false);
                 }}>Mnemonic</p>
                 <p onClick={(): void => {
-                    setWordType(2)
+                    setWordType({
+                        idsType: 2,
+                        operType: 1,
+                    });
                     setPopShow(false)
                 }}>Raw seed</p>
             </div>
         )
     };
+    const Cryptonode = (): React.ReactElement => {
+        return (
+            <Select value={cryptoType} onChange={(val) => {
+                console.log(val);
+                setWordType({
+                    ...wordType,
+                    operType: 2,
+                });
+                setCryptoType(val);
+            }} style={{ width: '100%' }} bordered={false}>
+                <Option value="sr25519">Schnorrkel(sr25519,recommended)</Option>
+                <Option value="ed25519">Edwards(ed25519,alternative)</Option>
+            </Select>
+        )
+    }
+
+    const getDefaultCreate = async (): Promise<void> => {
+        const { createWalletOne } = PolkadotConfig;
+        const result: any = await createWalletOne(wordType.idsType, cryptoType, wordType.operType, setpOneMsg.mnemonic);
+        const nextNeed: { mnemonic: string, pairType: string, address: string } = {
+            mnemonic: result.mnemonic,
+            pairType: cryptoType,
+            address: result.address
+        };
+        sessionStorage.setItem('createTwoMsg', JSON.stringify(nextNeed));
+        const { updateAddress } = props;
+        updateAddress(result.address);
+        setStepOneMsg({
+            ...setpOneMsg,
+            address: result.address,
+            mnemonic: result.mnemonic
+        });
+    }
+    useEffect(() => {
+        getDefaultCreate();
+    }, [wordType, cryptoType]);
     useImperativeHandle(ref, (): {} => ({
-        appove: appove
+        appove: appove,
     }));
     return (
         <div className="add-step-one">
-            
             <div className="word-box">
                 {/* 助记词 - Help */}
                 <div className="word-help">
@@ -42,7 +109,7 @@ const StepOne = React.forwardRef((props, ref): React.ReactElement => {
                 <div className="word-inner-box">
                     <div className="word-inner">
                         <p>
-                            enlist delay erode useless pulp trophy gate spy deny expire uniform energy
+                            {setpOneMsg.mnemonic}
                         </p>
                     </div>
                     <div className="word-oper">
@@ -52,7 +119,7 @@ const StepOne = React.forwardRef((props, ref): React.ReactElement => {
                         }} trigger={'click'} placement="bottom" content={<WordType />}>
                             <div className="word-type-box">
                                 {
-                                    wordType == 1 ? 'Mnemonic' : 'Raw seed'
+                                    wordType.idsType == 1 ? 'Mnemonic' : 'Raw seed'
                                 }
                                 <IconFont className="iconfont" type="icon-you_right" />
                             </div>
@@ -84,6 +151,7 @@ const StepOne = React.forwardRef((props, ref): React.ReactElement => {
                                 <IconFont className="iconfont" type="icon-shijian" />
                             </Tooltip>
                         </div>
+                        <Cryptonode />
                     </div>
                     <div className="option-path option-public">
                         <div className="option-title-remark">
@@ -95,7 +163,7 @@ const StepOne = React.forwardRef((props, ref): React.ReactElement => {
                             </Tooltip>
                         </div>
                         <div className="inp-path">
-                            <input type="text" placeholder="//hard/soft///password"/>
+                            <input type="text" placeholder="//hard/soft///password" />
                         </div>
                     </div>
                 </div>

@@ -14,38 +14,40 @@ const ChainInfoPageTable = ({
   return (
     <div className="chain-info-page-table">
       <ul>
-        {
-          (chainInfoList as HeaderExtendedWithMapping[]).map(
-            (item1: any, index: number) => {
-                const item = item1[0]
-                
-              return (
-                <li key={index}>
-                  <div className="table-number">
-                    <Link to={`/explore/query/${item.hash.toHex()}`}>
-                      {numFun(item.number.toString())}
-                    </Link>
+        {(chainInfoList as HeaderExtendedWithMapping[]).map(
+          (item1: any, index: number) => {
+            const item = item1[0];
+            return (
+              <li key={index}>
+                <div className="table-number">
+                  <Link to={`/explore/query/${item.hash.toHex()}`}>
+                    {numFun(item.number.toString())}
+                  </Link>
+                </div>
+                <div className="table-hash">{item.hash.toHex()}</div>
+                {item.authorFromMapping ? (
+                  <div className="table-account">
+                    <IconFont className="iconfont" type={"icon-diantai_fm"} />
+                    {item.author && (
+                      <span className="account-name">
+                        {strOmit(item.author.toString())}
+                      </span>
+                    )}
                   </div>
-                  <div className="table-hash">{item.hash.toHex()}</div>
-                  {item.authorFromMapping ? (
-                    <div className="table-account">
-                      <IconFont className="iconfont" type={'icon-diantai_fm'} />
-                     { item.author && <span className="account-name">
+                ) : (
+                  <div className="table-account">
+                    <IconFont className="iconfont" type={"icon-diantai_fm"} />
+                    {item.author && (
+                      <span className="account-name">
                         {strOmit(item.author.toString())}
-                      </span>}
-                    </div>
-                  ) : (
-                    <div className="table-account">
-                      <IconFont className="iconfont" type={'icon-diantai_fm'} />
-                     { item.author && <span className="account-name">
-                        {strOmit(item.author.toString())}
-                      </span>}
-                    </div>
-                  )}
-                </li>
-              );
-            }
-          )}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </li>
+            );
+          }
+        )}
       </ul>
     </div>
   );

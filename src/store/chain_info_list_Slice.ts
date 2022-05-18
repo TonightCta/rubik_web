@@ -7,8 +7,9 @@ export const chainInfoListSlice = createSlice({
     },
     reducers:{
         unshiftChainInfoList:(state,action)=>{
-
-            
+            if(state.chainInfoList.length>75){
+                state.chainInfoList.pop()
+            }
             state.chainInfoList.unshift(action.payload)
         }
     }

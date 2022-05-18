@@ -9,6 +9,7 @@ import { HashRouter, useNavigate } from 'react-router-dom';
 import './utils/api';
 
 const App = (): React.ReactElement<ReactNode> => {
+  
   return (
     <HashRouter>
       <div className="App">

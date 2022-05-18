@@ -5,9 +5,12 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
-    "@polkadot/api": "^8.4.2",
+    "@polkadot/api": "^7.15.1",
     "@polkadot/extension-dapp": "^0.43.2",
     "@reduxjs/toolkit": "^1.8.1",
+    "@polkadot/ui-keyring": "^2.2.1",
+    "@polkadot/ui-settings": "^2.2.1",
+    "@polkadot/wasm-crypto": "^5.1.1",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",

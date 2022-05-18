@@ -1,17 +1,14 @@
-import React, { useImperativeHandle, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { Tooltip } from 'antd';
-import IconFont from '../../../../../../components/icon_font'
+import IconFont from '../../../../../../components/icon_font';
+
 
 interface Props {
     title: string,
-    desc: string
+    desc: string,
 };
 
-interface PassFilter {
-    name: string,
-    password: string,
-    repeatpass: string
-}
+
 
 const PublicTitle = (props: Props): React.ReactElement => {
     return (
@@ -24,15 +21,11 @@ const PublicTitle = (props: Props): React.ReactElement => {
     )
 };
 
-const StepTwo = React.forwardRef((props: any, ref): React.ReactElement => {
-    const [accountMsg, setAccountMsg] = useState<PassFilter>({
-        name: '',
-        password: '',
-        repeatpass: ''
-    });
+const StepTwo = React.forwardRef((props: any, ref:any): React.ReactElement => {
     useImperativeHandle(ref, (): {} => ({
-        accountMsg: accountMsg
+        // accountMsg: accountMsg
     }))
+    const { accountMsg,setAccountMsg } = props;
     return (
         <div className="add-step-two">
             <div className="wallet-name wallet-inp-box">
@@ -42,7 +35,6 @@ const StepTwo = React.forwardRef((props: any, ref): React.ReactElement => {
                         ...accountMsg,
                         name: e.target.value
                     });
-                    console.log(props);
                     props.setInpName(e.target.value);
                 }} placeholder="New Account" />
             </div>
