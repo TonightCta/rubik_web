@@ -5,15 +5,26 @@ import "./index.scss";
 import ChainInfoPageTable from "./components/table/index";
 import PolkadotConfig from "../../../utils/api";
 import { HeaderExtendedWithMapping } from "../../../typing/apiType";
-import { useSelector } from "react-redux";
-import { selectChainInfoList } from "../../../store/chain_info_list_Slice";
+import { useSelector,useDispatch } from "react-redux";
+import { selectChainInfoList,initChainInfoList} from "../../../store/chain_info_list_Slice";
+import { selectApiStatus } from "../../../store/api_status";
 
 const ChainInfo: React.FC = (): React.ReactElement<React.ReactNode> => {
   const [infoIndex, setInfoIndex] = React.useState(0);
   const { getChainInfoList } = PolkadotConfig;
-  const chainInfoList = useSelector(selectChainInfoList)
-  console.log('chainInfoList',chainInfoList);
-  
+  let chainInfoList = useSelector(selectChainInfoList)
+  let apiStatus = useSelector(selectApiStatus)
+  const dispatch = useDispatch()
+  useEffect(()=>{
+      return ()=>{dispatch(initChainInfoList([]))}
+  },[])
+  useEffect(()=>{
+      console.log(123);
+      
+    if(apiStatus == true){
+        wsClick()
+    }
+  },[apiStatus])
   const wsClick = async () => {
     await getChainInfoList();
     // setBlockDetaisList(wsVlaue?.lastHeaders as unknown as HeaderExtendedWithMapping[])

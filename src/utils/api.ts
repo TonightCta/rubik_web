@@ -1,7 +1,17 @@
 import { ApiPromise } from "@polkadot/api";
 import { WsProvider } from "@polkadot/rpc-provider";
-import { HeaderExtendedWithMapping } from "../typing/apiType";
 import { ReactNode } from "react";
+import {
+    HeaderExtendedWithMapping,
+    IndexedEvent,
+    KeyedEvent,
+    isFunction,
+} from "../typing/apiType";
+import type { Vec } from "@polkadot/types";
+import type { EventRecord } from "@polkadot/types/interfaces";
+import { stringify, stringToU8a } from "@polkadot/util";
+import { xxhashAsHex } from "@polkadot/util-crypto";
+// import store from '../store/index'
 import { numFun } from "./filter";
 import { Keyring } from '@polkadot/keyring'
 import store from "../store";
@@ -10,17 +20,35 @@ import {
     mnemonicGenerate,
     randomAsHex,
 } from "@polkadot/util-crypto";
-import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import type { KeypairType } from "@polkadot/util-crypto/types";
 import keyring from "@polkadot/ui-keyring";
+import { useCall } from "./useCall";
+import eventsList from "../store/eventsList";
 
 interface CreateStepOne {
     mnemonic: string;
     address: string;
 }
+interface PrevHashes {
+    block: string | null;
+    event: string | null;
+}
+interface eventsListState {
+    eventsList: Events;
+    eventsValue: Vec<EventRecord>;
+}
+
+interface Events {
+    eventCount: number;
+    events: KeyedEvent[];
+}
 class PolkadotConfig {
     private api!: ApiPromise;
     private url: string = "wss://rpc.polkadot.io";
+    private prev: PrevHashes = {
+        block: "",
+        event: "",
+    };
     constructor() {
         const provider = new WsProvider(this.url);
         const initPolkadotConfing:
@@ -44,7 +72,7 @@ class PolkadotConfig {
             type: "sr25519",
             ss58Format: 42,
         });
-    };
+    }
     public getBlockHash = async () => {
         //测试
         const defaultChainHash: string = await this.api.genesisHash.toHex();
@@ -215,15 +243,106 @@ class PolkadotConfig {
             }
         );
     };
+    public getEvents = async () => {
+        useCall(this.api.query.system.events);
+        const { eventsList } = store.getState()
+        console.log(eventsList);
+
+        const records = eventsList.eventsValue
+        console.log(records);
+
+        records && this.manageEvents(this.api, this.prev, eventsList)
+    };
+    private manageEvents = async (
+        api: ApiPromise,
+        prev: PrevHashes,
+        eventsLists: eventsListState
+    ) => {
+        const records = eventsLists.eventsValue
+        const { eventsList } = eventsLists
+        const newEvents: IndexedEvent[] = records
+            .map((record, index) => ({ indexes: [index], record }))
+            .filter(
+                ({
+                    record: {
+                        event: { method, section },
+                    },
+                }) =>
+                    section !== "system" &&
+                    (!["balances", "treasury"].includes(section) ||
+                        !["Deposit", "Withdraw"].includes(method)) &&
+                    (!["paraInclusion", "parasInclusion", "inclusion"].includes(
+                        section
+                    ) ||
+                        !["CandidateBacked", "CandidateIncluded"].includes(method))
+            )
+            .reduce((combined: IndexedEvent[], e): IndexedEvent[] => {
+                const prev = combined.find(
+                    ({
+                        record: {
+                            event: { method, section },
+                        },
+                    }) =>
+                        e.record.event.section === section &&
+                        e.record.event.method === method
+                );
+
+                if (prev) {
+                    prev.indexes.push(...e.indexes);
+                } else {
+                    combined.push(e);
+                }
+
+                return combined;
+            }, [])
+            .reverse();
+        const newEventHash = xxhashAsHex(stringToU8a(stringify(newEvents)));
+        console.log({ newEvents, newEventHash, prev });
+
+        // 新hash和上一次更新时得到的hash不同时 并且存在最新消息时，触发最新事件更新
+        if (newEventHash !== prev.event && newEvents.length) {
+            // 替换新的hash值
+            prev.event = newEventHash;
+
+            // retrieve the last header, this will map to the current state
+
+            const header = await api.rpc.chain.getHeader(records.createdAtHash);
+            const blockNumber = header.number.unwrap();
+            const blockHash = header.hash.toHex();
+            if (blockHash !== prev.block) {
+                prev.block = blockHash;
+                store.dispatch({
+                    type: "eventsList/changeEventsList",
+                    payload: {
+                        eventCount: records.length,
+                        events: [
+                            ...newEvents.map(({ indexes, record }) => ({
+                                blockHash,
+                                blockNumber,
+                                indexes,
+                                key: `${blockNumber.toNumber()}-${blockHash}-${indexes.join(
+                                    "."
+                                )}`,
+                                record,
+                            })),
+                            ...eventsList.events
+                            // remove all events for the previous same-height blockNumber
+                            //   ...events.filter((p) => !p.blockNumber?.eq(blockNumber))
+                        ].slice(0, 75),
+                    },
+                });
+            }
+        } else {
+        }
+    };
     //发生转账
     public sendTransfer = async () => {
         console.log(this.api.tx.balances)
     };
     // Staking Info
     public getStakingInfo = async () => {
-        // const result = await this.api.derive.staking.overview;
-        // console.log(result);
-        
+        const result = useCall<any>(this.api.derive.staking.overview);
+        console.log(result);
     }
 }
 
