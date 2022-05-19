@@ -1,0 +1,45 @@
+.forks-boxes {
+    background-color: #fff;
+    padding: 38px;
+
+    .forks-box {
+        background: #f2f2f2;
+        border-radius: 20px;
+        width: 100%;
+        height: 100%;
+        padding: 32px;
+
+        header {
+            display: flex;
+            justify-content: left;
+
+            .forks-box {
+                padding: 12px;
+                color: #2D2a75;
+                background-color: #827cf8;
+                border-radius: 13px;
+                font-size: 16px;
+                width: 182px;
+                height: 75px;
+                margin-left: 9px;
+
+                p {
+                    margin: 0;
+                }
+
+                .forks-box-content {
+                    font-size: 18px;
+                    font-weight: 400;
+                    color: #fff;
+                }
+            }
+        }
+
+        .forks {
+            background-color: #fff;
+            margin-top: 14px;
+            padding: 32px;
+            border-radius: 20px;
+        }
+    }
+}

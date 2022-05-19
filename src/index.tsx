@@ -7,6 +7,8 @@ import '@polkadot/wasm-crypto/initWasmAsm';
 // import './config-overrides'
 import reportWebVitals from './reportWebVitals';
 import { waitReady } from '@polkadot/wasm-crypto'
+import store from "./store/index";
+import { Provider } from 'react-redux';
 
 
 
@@ -16,9 +18,11 @@ waitReady().then(() => {
   );
   // keyring.loadAll({ ss58Format: 42, type: 'sr25519' });
   root.render(
-    // <React.StrictMode>
-    <App />
-    // </React.StrictMode>
+    <Provider store={store}>
+      {/* <React.StrictMode> */}
+      <App />
+      {/* </React.StrictMode> */}
+    </Provider>
   );
 })
 

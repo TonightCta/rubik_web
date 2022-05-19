@@ -39,7 +39,7 @@ export const getHeaderList = (pathname: string) => {
         title: "Explorer",
         labelList: [
           {
-            name: "chain info",
+            name: "Chain Info",
             path: "/explorer/chain-info",
           },
           {

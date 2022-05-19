@@ -5,6 +5,7 @@ import { numFun } from "../../../utils/filter";
 import ExplorerView from './components/extrinsics/index';
 import PointTitle from '../../../components/point_title/index';
 import SystemEvents from './components/system_events/index';
+import Logs from "./components/Logs";
 const BlockDetail = (): React.ReactElement<ReactNode> => {
   return (
     <div className="block-detail-bg">
@@ -70,7 +71,9 @@ const BlockDetail = (): React.ReactElement<ReactNode> => {
         <div className="block-detail-box">
             <SystemEvents/>
         </div>
-        <div className="block-detail-box"></div>
+        <div className="block-detail-box">
+          <Logs/>
+        </div>
       </div>
     </div>
   );

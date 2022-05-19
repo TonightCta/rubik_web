@@ -2,7 +2,8 @@ import React, { ReactNode, useState, useRef, ReactHTMLElement, useCallback } fro
 import { Table, Tag, Popover, Switch } from 'antd';
 import { ColumnsType } from "antd/lib/table";
 import IconFont from '../../../../components/icon_font';
-import SendBox from './send/send_modal'
+import SendBox from './send/send_modal';
+import PolkadotConfing from '../../../../utils/api'
 
 interface TableColumns {
     title?: string,
@@ -19,12 +20,12 @@ const AccountTable = (): React.ReactElement => {
         id: '',
     });
 
-    const getSendMsg = useCallback(() : void => {
+    const getSendMsg = useCallback((): void => {
         console.log('Send Emit Message')
-    },[])
+    }, [])
 
-    const sendBoxRef : any = useRef<HTMLDivElement>(null);
-    
+    const sendBoxRef: any = useRef<HTMLDivElement>(null);
+
     const MoreHeim = (props: { id: string }): React.ReactElement => {
         return (
             <div className="more-heim-oper">
@@ -131,7 +132,11 @@ const AccountTable = (): React.ReactElement => {
                     >
                         <IconFont className="iconfont more-heim-icon" type="icon-dizhi" />
                     </Popover>
-                    <IconFont className="iconfont more-heim-icon out-link" type="icon-xingxing_star" />
+                    <IconFont onClick={() => {
+                        const { sendTransfer } = PolkadotConfing;
+                        sendTransfer();
+                        // coonsole.log()
+                    }} className="iconfont more-heim-icon out-link" type="icon-xingxing_star" />
                 </div>
             ),
         },
@@ -173,7 +178,7 @@ const AccountTable = (): React.ReactElement => {
                 <input type="text" placeholder="Type Here" />
             </div>
             <Table<TableColumns> bordered={false} columns={columns} dataSource={data}></Table>
-            <SendBox id={heimIndexClass.id} ref={sendBoxRef} getSendMsg={getSendMsg}/>
+            <SendBox id={heimIndexClass.id} ref={sendBoxRef} getSendMsg={getSendMsg} />
         </div>
     )
 };
