@@ -1,40 +1,54 @@
 import { ApiPromise } from "@polkadot/api";
 import { WsProvider } from "@polkadot/rpc-provider";
-import { HeaderExtendedWithMapping, isFunction } from "../typing/apiType";
-import { ReactNode, useEffect } from "react";
-import React from "react";
+import {
+  HeaderExtendedWithMapping,
+  IndexedEvent,
+  KeyedEvent,
+  isFunction,
+} from "../typing/apiType";
+import type { Vec } from "@polkadot/types";
+import type { EventRecord } from "@polkadot/types/interfaces";
+import { stringify, stringToU8a } from "@polkadot/util";
+import { xxhashAsHex } from "@polkadot/util-crypto";
+import { ReactNode } from "react";
 // import store from '../store/index'
-import type { Codec, IOption } from "@polkadot/types/types";
 import { numFun } from "./filter";
 // import { useDispatch } from "react-redux";
 import store from "../store";
-import { unshiftChainInfoList } from "../store/chain_info_list_Slice";
-import { Keyring } from "@polkadot/keyring";
 import {
   cryptoWaitReady,
   mnemonicGenerate,
   randomAsHex,
 } from "@polkadot/util-crypto";
-import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import type { KeypairType } from "@polkadot/util-crypto/types";
-import { isWasm } from "@polkadot/util";
 import keyring from "@polkadot/ui-keyring";
+import { useCall } from "./useCall";
+import eventsList from "../store/eventsList";
 
-interface Authors {
-  byAuthor: Record<string, string>;
-  eraPoints: Record<string, string>;
-  lastBlockAuthors: string[];
-  lastBlockNumber?: string;
-  lastHeader?: HeaderExtendedWithMapping;
-  lastHeaders: HeaderExtendedWithMapping[];
-}
 interface CreateStepOne {
   mnemonic: string;
   address: string;
 }
+interface PrevHashes {
+  block: string | null;
+  event: string | null;
+}
+interface eventsListState{
+    eventsList: Events;
+    eventsValue: Vec<EventRecord>;
+}
+
+interface Events {
+  eventCount: number;
+  events: KeyedEvent[];
+}
 class PolkadotConfig {
   private api!: ApiPromise;
   private url: string = "wss://rpc.polkadot.io";
+  private prev: PrevHashes = {
+    block: "",
+    event: "",
+  };
   constructor() {
     const provider = new WsProvider(this.url);
     const initPolkadotConfing:
@@ -44,6 +58,7 @@ class PolkadotConfig {
       this.api = await ApiPromise.create({ provider: provider });
       // const test = await this.api.isReady();
       console.log("api", this.api);
+      store.dispatch({ type: "apiStatus/setIsReady", payload: true });
       keyring.loadAll({
         genesisHash: this.api.genesisHash,
         type: "sr25519",
@@ -147,7 +162,7 @@ class PolkadotConfig {
     // const dispatch = useDispatch()
 
     this.api.derive.chain.subscribeNewHeads(
-      async (lastHeader: HeaderExtendedWithMapping): Promise<any> => {
+      async (lastHeader: any): Promise<any> => {
         // 判断是否拥有authorMapping属性
         const isAuthorMappingWithDeposit =
           typeof this.api.query.authorMapping?.mappingWithDeposit;
@@ -229,25 +244,98 @@ class PolkadotConfig {
       }
     );
   };
-  // import { ApiPromise } from '@polkadot/api';
-  // import { WsProvider } from '@polkadot/rpc-provider';
+  public getEvents = async () => {
+      useCall(this.api.query.system.events);
+      const {eventsList} = store.getState()
+      console.log(eventsList);
+      
+      const records = eventsList.eventsValue
+    console.log(records);
 
-  // import { ReactNode } from 'react';
+    records && this.manageEvents(this.api,this.prev,eventsList)
+  };
+  private manageEvents = async (
+    api: ApiPromise,
+    prev: PrevHashes,
+    eventsLists:eventsListState
+  ) => {
+    const records = eventsLists.eventsValue
+    const {eventsList} = eventsLists
+    const newEvents: IndexedEvent[] = records
+      .map((record, index) => ({ indexes: [index], record }))
+      .filter(
+        ({
+          record: {
+            event: { method, section },
+          },
+        }) =>
+          section !== "system" &&
+          (!["balances", "treasury"].includes(section) ||
+            !["Deposit", "Withdraw"].includes(method)) &&
+          (!["paraInclusion", "parasInclusion", "inclusion"].includes(
+            section
+          ) ||
+            !["CandidateBacked", "CandidateIncluded"].includes(method))
+      )
+      .reduce((combined: IndexedEvent[], e): IndexedEvent[] => {
+        const prev = combined.find(
+          ({
+            record: {
+              event: { method, section },
+            },
+          }) =>
+            e.record.event.section === section &&
+            e.record.event.method === method
+        );
 
-  // class PolkadotConfig {
-  //     private api: any;
-  //     private url: string = 'ws://3.222.215.241:19944';
-  //     constructor() {
-  //         const provider = new WsProvider(this.url);
-  //         const initPolkadotConfing: Function | Promise<ApiPromise> | ReactNode = async () => {
-  //             this.api = await ApiPromise.create({ provider: provider });
-  //             // const test = await this.api.isReady();
-  //             console.log(this.api)
-  //             console.log(this.api._isReady);
-  //             console.log(isWasm)
-  //         };
-  //         initPolkadotConfing();
-  //     };
+        if (prev) {
+          prev.indexes.push(...e.indexes);
+        } else {
+          combined.push(e);
+        }
+
+        return combined;
+      }, [])
+      .reverse();
+    const newEventHash = xxhashAsHex(stringToU8a(stringify(newEvents)));
+    console.log({ newEvents, newEventHash, prev });
+
+    // 新hash和上一次更新时得到的hash不同时 并且存在最新消息时，触发最新事件更新
+    if (newEventHash !== prev.event && newEvents.length) {
+      // 替换新的hash值
+      prev.event = newEventHash;
+
+      // retrieve the last header, this will map to the current state
+
+      const header = await api.rpc.chain.getHeader(records.createdAtHash);
+      const blockNumber = header.number.unwrap();
+      const blockHash = header.hash.toHex();
+      if (blockHash !== prev.block) {
+        prev.block = blockHash;
+        store.dispatch({
+          type: "eventsList/changeEventsList",
+          payload: {
+            eventCount: records.length,
+            events: [
+              ...newEvents.map(({ indexes, record }) => ({
+                blockHash,
+                blockNumber,
+                indexes,
+                key: `${blockNumber.toNumber()}-${blockHash}-${indexes.join(
+                  "."
+                )}`,
+                record,
+              })),
+              ...eventsList.events
+              // remove all events for the previous same-height blockNumber
+              //   ...events.filter((p) => !p.blockNumber?.eq(blockNumber))
+            ].slice(0,75),
+          },
+        });
+      }
+    } else {
+    }
+  };
 }
 
 export default new PolkadotConfig();

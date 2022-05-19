@@ -19,9 +19,9 @@ waitReady().then(() => {
   // keyring.loadAll({ ss58Format: 42, type: 'sr25519' });
   root.render(
     <Provider store={store}>
-    // <React.StrictMode>
+     {/* <React.StrictMode> */}
     <App />
-    // </React.StrictMode>
+     {/* </React.StrictMode> */}
     </Provider>
   );
 })
